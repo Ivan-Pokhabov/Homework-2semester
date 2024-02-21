@@ -1,10 +1,11 @@
 ﻿using System.Linq.Expressions;
 using System.Numerics;
+using System.Reflection.Metadata;
 
 int[] SuffixArrayBuild(string str)
 {
     int[] shifts = new int[str.Length];
-    int[] c = new int[str.Length];
+    int[] countingSortHelper = new int[str.Length];
     for (int i = 0; i < str.Length; i++)
     {
         shifts[i] = i;
@@ -12,10 +13,10 @@ int[] SuffixArrayBuild(string str)
     Array.Sort(shifts, (int a, int b) => { if (str[a] < str[b]) return -1; if (str[a] > str[b]) return 1; return 0; });
     for (int i = 1; i < str.Length; ++i)
     {
-        c[shifts[i]] = c[shifts[i - 1]];
+        countingSortHelper[shifts[i]] = countingSortHelper[shifts[i - 1]];
         if ((str[shifts[i]] != str[shifts[i - 1]]))
         {
-            ++c[shifts[i]];
+            ++countingSortHelper[shifts[i]];
         }
     }
     for (int k = 1; k < str.Length; k *= 2)
@@ -32,25 +33,25 @@ int[] SuffixArrayBuild(string str)
             {
                 firstHalf += str.Length;
             }
-            countingSortArray[c[firstHalf]].Add((c[secondHalf], firstHalf));
+            countingSortArray[countingSortHelper[firstHalf]].Add((countingSortHelper[secondHalf], firstHalf));
         }
-        int cn = 0;
+        int countNewShift = 0;
         int shiftIndex = 0;
         foreach(var element in countingSortArray)
         {
-            int x = -1;
-            foreach(var (ci, j) in element)
+            int lastShiftNumber = -1;
+            foreach(var (currentShiftNumber, currentShiftPosition) in element)
             {
-                shifts[shiftIndex++] = j;
-                if (ci != x)
+                shifts[shiftIndex++] = currentShiftPosition;
+                if (currentShiftNumber != lastShiftNumber)
                 {
-                    ++cn;
-                    x = ci;
+                    ++countNewShift;
+                    lastShiftNumber = currentShiftNumber;
                 }
-                c[j] = cn - 1;
+                countingSortHelper[currentShiftPosition] = countNewShift - 1;
             }
         }
-        if (cn == str.Length)
+        if (countNewShift == str.Length)
         {
             break;
         }
@@ -58,8 +59,26 @@ int[] SuffixArrayBuild(string str)
     return shifts;
 }
 
-
-foreach(var element in SuffixArrayBuild(Console.ReadLine()))
+(string, int) BWT(string str)
 {
-    Console.Write($"{element} ");
+    var BWTString = new System.Text.StringBuilder();
+    int[] sortedShifts = SuffixArrayBuild(str);
+    int originalStringIndex = -1;
+    for(int i = 0; i < str.Length; ++i)
+    {
+        if (sortedShifts[i] == 0)
+        {
+            originalStringIndex = i + 1;
+            BWTString.Append(str[str.Length - 1].ToString());
+        }
+        else
+        {
+            BWTString.Append(str[sortedShifts[i] - 1].ToString());
+        }
+    }
+
+    return (BWTString.ToString(), originalStringIndex);
 }
+
+var (str, i) = BWT("ABACABA");
+Console.WriteLine($"{str}, {i}");
