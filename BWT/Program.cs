@@ -6,7 +6,7 @@ int[] SuffixArrayBuild(string str)
 {
     int[] shifts = new int[str.Length];
     int[] countingSortHelper = new int[str.Length];
-    for (int i = 0; i < str.Length; i++)
+    for (int i = 0; i < str.Length; ++i)
     {
         shifts[i] = i;
     }
@@ -37,10 +37,10 @@ int[] SuffixArrayBuild(string str)
         }
         int countNewShift = 0;
         int shiftIndex = 0;
-        foreach(var element in countingSortArray)
+        foreach (var element in countingSortArray)
         {
             int lastShiftNumber = -1;
-            foreach(var (currentShiftNumber, currentShiftPosition) in element)
+            foreach (var (currentShiftNumber, currentShiftPosition) in element)
             {
                 shifts[shiftIndex++] = currentShiftPosition;
                 if (currentShiftNumber != lastShiftNumber)
@@ -64,21 +64,40 @@ int[] SuffixArrayBuild(string str)
     var BWTString = new System.Text.StringBuilder();
     int[] sortedShifts = SuffixArrayBuild(str);
     int originalStringIndex = -1;
-    for(int i = 0; i < str.Length; ++i)
+    for (int i = 0; i < str.Length; ++i)
     {
         if (sortedShifts[i] == 0)
         {
             originalStringIndex = i + 1;
-            BWTString.Append(str[str.Length - 1].ToString());
+            BWTString.Append(str[str.Length - 1]);
         }
         else
         {
-            BWTString.Append(str[sortedShifts[i] - 1].ToString());
+            BWTString.Append(str[sortedShifts[i] - 1]);
         }
     }
 
     return (BWTString.ToString(), originalStringIndex);
 }
 
-var (str, i) = BWT("ABACABA");
-Console.WriteLine($"{str}, {i}");
+string ReverseBWT(string BWTString, int originalStringIndex)
+{
+    int[] shifts = new int[BWTString.Length];
+    for (int i = 0; i < BWTString.Length; ++i)
+    {
+        shifts[i] = i;
+    }
+    Array.Sort(shifts, (int a, int b) => { if (BWTString[a] < BWTString[b]) return -1; if (BWTString[a] > BWTString[b]) return 1; return 0; });
+    var originalString = new System.Text.StringBuilder();
+    int currentSymbolIndex = shifts[originalStringIndex - 1];
+    for (int i = 0; i < BWTString.Length; ++i)
+    {
+        originalString.Append(BWTString[currentSymbolIndex]);
+        currentSymbolIndex = shifts[currentSymbolIndex];
+    }
+    return originalString.ToString();
+}
+
+var (BWTString, i) = BWT("ABACABA");
+Console.WriteLine($"{BWTString}, {i}");
+Console.WriteLine(ReverseBWT(BWTString, i));
