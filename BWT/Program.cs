@@ -59,7 +59,7 @@ int[] SuffixArrayBuild(string str)
 }
 
 
-foreach(var element in SuffixArrayBuild(Console.ReadLine() + "$"))
+foreach(var element in SuffixArrayBuild(Console.ReadLine()))
 {
     Console.Write($"{element} ");
 }
