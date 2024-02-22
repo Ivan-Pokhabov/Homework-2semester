@@ -63,7 +63,7 @@ int[] SuffixArrayBuild(string str)
 {
     var BWTString = new System.Text.StringBuilder();
     int[] sortedShifts = SuffixArrayBuild(str);
-    int originalStringIndex = -1;
+    int originalStringIndex = 1;
     for (int i = 0; i < str.Length; ++i)
     {
         if (sortedShifts[i] == 0)
@@ -76,12 +76,15 @@ int[] SuffixArrayBuild(string str)
             BWTString.Append(str[sortedShifts[i] - 1]);
         }
     }
-
     return (BWTString.ToString(), originalStringIndex);
 }
 
 string ReverseBWT(string BWTString, int originalStringIndex)
 {
+    if (BWTString.Length == 0)
+    {
+        return "";
+    }
     int[] shifts = new int[BWTString.Length];
     for (int i = 0; i < BWTString.Length; ++i)
     {
@@ -98,6 +101,59 @@ string ReverseBWT(string BWTString, int originalStringIndex)
     return originalString.ToString();
 }
 
-var (BWTString, i) = BWT("ABACABA");
-Console.WriteLine($"{BWTString}, {i}");
-Console.WriteLine(ReverseBWT(BWTString, i));
+bool Test1()
+{
+    string str = "abcd";
+    var (BWTString, originalStringIndex) = BWT(str);
+    if (!String.Equals("dabc", BWTString) || originalStringIndex != 1 || !String.Equals(str, ReverseBWT(BWTString, originalStringIndex)))
+    {
+        return false;
+    }
+    return true;
+}
+
+bool Test2()
+{
+    string str = "ABACABA";
+    var (BWTString, originalStringIndex) = BWT(str);
+    if (!String.Equals("BCABAAA", BWTString) || originalStringIndex != 3 || !String.Equals(str, ReverseBWT(BWTString, originalStringIndex)))
+    {
+        return false;
+    }
+    return true;
+}
+
+bool Test3()
+{
+    string str = "";
+    var (BWTString, originalStringIndex) = BWT(str);
+    if (!String.Equals("", BWTString) || originalStringIndex != 1 || !String.Equals(str, ReverseBWT(BWTString, originalStringIndex)))
+    {
+        return false;
+    }
+    return true;
+}
+
+bool Test()
+{
+    bool[] testCases = {Test1(), Test2(), Test3()};
+    bool passed = true;
+    for (int i = 0; i < 3; ++i)
+    {
+        if (!testCases[i])
+        {
+            Console.WriteLine($"Program did not pass test {i + 1}");
+            passed = false;
+        }
+    }
+    return passed;
+}
+
+if (!Test())
+{
+    Environment.Exit(-1);
+}
+
+var (BWTString, originalStringIndex) = BWT("ABACABA");
+Console.WriteLine($"{BWTString}, {originalStringIndex}");
+Console.WriteLine(ReverseBWT(BWTString, originalStringIndex));
