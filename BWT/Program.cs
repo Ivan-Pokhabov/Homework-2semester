@@ -105,33 +105,21 @@ bool Test1()
 {
     string str = "abcd";
     var (BWTString, originalStringIndex) = BWT(str);
-    if (!String.Equals("dabc", BWTString) || originalStringIndex != 1 || !String.Equals(str, ReverseBWT(BWTString, originalStringIndex)))
-    {
-        return false;
-    }
-    return true;
+    return String.Equals("dabc", BWTString) && originalStringIndex == 1 && String.Equals(str, ReverseBWT(BWTString, originalStringIndex));
 }
 
 bool Test2()
 {
     string str = "ABACABA";
     var (BWTString, originalStringIndex) = BWT(str);
-    if (!String.Equals("BCABAAA", BWTString) || originalStringIndex != 3 || !String.Equals(str, ReverseBWT(BWTString, originalStringIndex)))
-    {
-        return false;
-    }
-    return true;
+    return String.Equals("BCABAAA", BWTString) && originalStringIndex == 3 && String.Equals(str, ReverseBWT(BWTString, originalStringIndex));
 }
 
 bool Test3()
 {
     string str = "";
     var (BWTString, originalStringIndex) = BWT(str);
-    if (!String.Equals("", BWTString) || originalStringIndex != 1 || !String.Equals(str, ReverseBWT(BWTString, originalStringIndex)))
-    {
-        return false;
-    }
-    return true;
+    return String.Equals("", BWTString) && originalStringIndex == 1 && String.Equals(str, ReverseBWT(BWTString, originalStringIndex));
 }
 
 bool Test()
