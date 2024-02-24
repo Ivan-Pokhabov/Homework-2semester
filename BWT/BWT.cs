@@ -77,7 +77,7 @@ public static class BWT
         return (BWTString.ToString(), originalStringIndex);
     }
 
-    public static string ReverseTransfom(string BWTString, int originalStringIndex)
+    public static string ReverseTransform(string BWTString, int originalStringIndex)
     {   
         if (BWTString.Length == 0 && originalStringIndex == 1)
         {
