@@ -60,10 +60,9 @@ switch (Console.ReadLine())
             Console.WriteLine("Enter string after BWT and its index: ");
             var parameters = Console.ReadLine();
 
-            var stringArray = parameters.Split();
-            if (parameters.Length != 2)
+            var stringArray = parameters.Split(' ');
+            if (stringArray.Length != 2)
             {
-                Console.WriteLine("Incorrect input");
                 return -2;
             }
 
