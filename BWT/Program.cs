@@ -1,18 +1,18 @@
-﻿bool Test1()
+﻿bool TestSortedString()
 {
     var str = "abcd";
     var (BWTString, originalStringIndex) = BWT.Transform(str);
     return String.Equals("dabc", BWTString) && originalStringIndex == 1 && String.Equals(str, BWT.ReverseTransform(BWTString, originalStringIndex));
 }
 
-bool Test2()
+bool TestNormalString()
 {
     var str = "ABACABA";
     var (BWTString, originalStringIndex) = BWT.Transform(str);
     return String.Equals("BCABAAA", BWTString) && originalStringIndex == 3 && String.Equals(str, BWT.ReverseTransform(BWTString, originalStringIndex));
 }
 
-bool Test3()
+bool TestEmptyString()
 {
     var str = "";
     var (BWTString, originalStringIndex) = BWT.Transform(str);
@@ -21,7 +21,7 @@ bool Test3()
 
 bool Test()
 {
-    var testCases = new bool[] {Test1(), Test2(), Test3()};
+    var testCases = new bool[] {TestSortedString(), TestNormalString(), TestEmptyString()};
     var passed = true;
     for (int i = 0; i < 3; ++i)
     {
