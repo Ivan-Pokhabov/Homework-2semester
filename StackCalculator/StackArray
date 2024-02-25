@@ -1,0 +1,50 @@
+namespace StackCalculator
+
+public class StackArray: IStack
+{
+    private var topIndex = -1;
+
+    private var arraySize = 1;
+
+    private double[] stack;
+
+    public StackArray()
+    {
+        this.stack = new double[this.arraySize];
+    }
+
+    public void Push(double element)
+    {
+        ResizeArray();
+
+        ++topIndex;
+
+        stack[topIndex] = element;
+    }
+
+    public double Pop()
+    {
+        if (IsEmpty()) 
+        {
+            throw new InvalidOperationException("Can't to Pop() from empty stack");
+        }
+
+        --topIndex;
+
+        return stack[topIndex - 1];
+    }
+
+    public bool IsEmpty() => topIndex == -1;
+
+    private void ResizeArray()
+    {
+        if (topIndex + 1 < arraySize) => ;
+
+        arraySize *= 2;
+
+        var temp = new double[arraySize];
+        stack.CopyTo(temp, 0);
+
+        stack = temp;
+    }
+}
