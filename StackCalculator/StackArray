@@ -1,9 +1,9 @@
-namespace StackCalculator
+namespace StackCalculator;
 
 /// <summary>
 /// Class that realize stack contains doubles on array and interface IStack
 /// </summary>
-public class StackArray: IStack
+public class StackArray : IStack
 {
     /// <summary>
     /// Index to the top element of stack in array

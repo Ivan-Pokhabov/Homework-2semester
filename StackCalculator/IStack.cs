@@ -1,4 +1,4 @@
-namespace StackCalculator
+namespace StackCalculator;
 
 /// <summary>
 /// Stack, a first-in-first-out container for double values.

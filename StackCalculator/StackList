@@ -1,0 +1,41 @@
+namespace StackCalculator;
+
+/// <summary>
+/// Class that realize stack contains doubles on List and interface IStack
+/// </summary>
+public class StackList : IStack
+{
+    /// <summary>
+    /// List that keeps stack elements
+    /// </summary>
+    private var stack = new List<double>();
+
+    /// <summary>
+    /// Initializes a new instance of the StackList class
+    /// </summary>
+    public StackArray()
+    {
+    }
+
+    /// <inheritdoc />
+    public void Push(double element)
+    {
+        stack.Insert(0, element);
+    }
+
+    /// <inheritdoc />
+    public double Pop()
+    {
+        if (IsEmpty()) 
+        {
+            throw new InvalidOperationException("Can't to Pop() from empty stack");
+        }
+
+        --topIndex;
+
+        return stack[topIndex - 1];
+    }
+
+    /// <inheritdoc />
+    public bool IsEmpty() => !stack.Any();
+}
