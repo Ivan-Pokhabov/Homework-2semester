@@ -1,5 +1,50 @@
 public static class BWT
 {
+    public static (string, int) Transform(string str)
+    {
+        var BWTString = new System.Text.StringBuilder();
+        var sortedShifts = SuffixArrayBuild(str);
+        var originalStringIndex = 1;
+        for (var i = 0; i < str.Length; ++i)
+        {
+            if (sortedShifts[i] == 0)
+            {
+                originalStringIndex = i + 1;
+                BWTString.Append(str[^1]);
+            }
+            else
+            {
+                BWTString.Append(str[sortedShifts[i] - 1]);
+            }
+        }
+        return (BWTString.ToString(), originalStringIndex);
+    }
+
+    public static string ReverseTransform(string BWTString, int originalStringIndex)
+    {   
+        if (BWTString.Length == 0 && originalStringIndex == 1)
+        {
+            return string.Empty;
+        }
+        if (originalStringIndex <= 0 || originalStringIndex > BWTString.Length)
+        {
+            Console.WriteLine("Incorrect input");
+            return string.Empty;
+        }
+        
+        var shifts = Enumerable.Range(0, BWTString.Length).ToArray();
+        Array.Sort(shifts, (int a, int b) => BWTString[a].CompareTo(BWTString[b]));
+
+        var originalString = new System.Text.StringBuilder();
+        var currentSymbolIndex = shifts[originalStringIndex - 1];
+        for (var i = 0; i < BWTString.Length; ++i)
+        {
+            originalString.Append(BWTString[currentSymbolIndex]);
+            currentSymbolIndex = shifts[currentSymbolIndex];
+        }
+        return originalString.ToString();
+    }
+    
     private static int[] SuffixArrayBuild(string str)
     {
         var countingSortHelper = new int[str.Length];
@@ -37,7 +82,7 @@ public static class BWT
             var shiftIndex = 0;
             foreach (var element in countingSortArray)
             {
-                int lastShiftNumber = -1;
+                var lastShiftNumber = -1;
                 foreach (var (currentShiftNumber, currentShiftPosition) in element)
                 {
                     shifts[shiftIndex++] = currentShiftPosition;
@@ -55,50 +100,5 @@ public static class BWT
             }
         }
         return shifts;
-    }
-
-    public static (string, int) Transform(string str)
-    {
-        var BWTString = new System.Text.StringBuilder();
-        int[] sortedShifts = SuffixArrayBuild(str);
-        int originalStringIndex = 1;
-        for (int i = 0; i < str.Length; ++i)
-        {
-            if (sortedShifts[i] == 0)
-            {
-                originalStringIndex = i + 1;
-                BWTString.Append(str[^1]);
-            }
-            else
-            {
-                BWTString.Append(str[sortedShifts[i] - 1]);
-            }
-        }
-        return (BWTString.ToString(), originalStringIndex);
-    }
-
-    public static string ReverseTransform(string BWTString, int originalStringIndex)
-    {   
-        if (BWTString.Length == 0 && originalStringIndex == 1)
-        {
-            return string.Empty;
-        }
-        if (originalStringIndex <= 0 || originalStringIndex > BWTString.Length)
-        {
-            Console.WriteLine("Incorrect input");
-            return string.Empty;
-        }
-        
-        var shifts = Enumerable.Range(0, BWTString.Length).ToArray();
-        Array.Sort(shifts, (int a, int b) => BWTString[a].CompareTo(BWTString[b]));
-
-        var originalString = new System.Text.StringBuilder();
-        int currentSymbolIndex = shifts[originalStringIndex - 1];
-        for (int i = 0; i < BWTString.Length; ++i)
-        {
-            originalString.Append(BWTString[currentSymbolIndex]);
-            currentSymbolIndex = shifts[currentSymbolIndex];
-        }
-        return originalString.ToString();
     }
 }

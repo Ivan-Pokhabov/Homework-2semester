@@ -1,28 +1,28 @@
 ﻿bool Test1()
 {
-    string str = "abcd";
+    var str = "abcd";
     var (BWTString, originalStringIndex) = BWT.Transform(str);
     return String.Equals("dabc", BWTString) && originalStringIndex == 1 && String.Equals(str, BWT.ReverseTransform(BWTString, originalStringIndex));
 }
 
 bool Test2()
 {
-    string str = "ABACABA";
+    var str = "ABACABA";
     var (BWTString, originalStringIndex) = BWT.Transform(str);
     return String.Equals("BCABAAA", BWTString) && originalStringIndex == 3 && String.Equals(str, BWT.ReverseTransform(BWTString, originalStringIndex));
 }
 
 bool Test3()
 {
-    string str = "";
+    var str = "";
     var (BWTString, originalStringIndex) = BWT.Transform(str);
     return String.Equals("", BWTString) && originalStringIndex == 1 && String.Equals(str, BWT.ReverseTransform(BWTString, originalStringIndex));
 }
 
 bool Test()
 {
-    bool[] testCases = {Test1(), Test2(), Test3()};
-    bool passed = true;
+    var testCases = new bool[] {Test1(), Test2(), Test3()};
+    var passed = true;
     for (int i = 0; i < 3; ++i)
     {
         if (!testCases[i])
