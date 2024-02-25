@@ -6,7 +6,7 @@ public static class BWT
         var shifts = Enumerable.Range(0, str.Length).ToArray();
         Array.Sort(shifts, (int a, int b) => str[a].CompareTo(str[b]));
 
-        for (int i = 1; i < str.Length; ++i)
+        for (var i = 1; i < str.Length; ++i)
         {
             countingSortHelper[shifts[i]] = countingSortHelper[shifts[i - 1]];
             if ((str[shifts[i]] != str[shifts[i - 1]]))
@@ -15,17 +15,17 @@ public static class BWT
             }
         }
 
-        for (int k = 1; k < str.Length; k *= 2)
+        for (var k = 1; k < str.Length; k *= 2)
         {
-            List<(int, int)>[] countingSortArray = new List<(int, int)>[str.Length];
-            for(int h = 0; h < str.Length; ++h)
+            var countingSortArray = new List<(int, int)>[str.Length];
+            for(var h = 0; h < str.Length; ++h)
             {
                 countingSortArray[h] = new List<(int, int)>();
             }
 
             foreach(var secondHalf in shifts)
             {
-                int firstHalf = secondHalf - k;
+                var firstHalf = secondHalf - k;
                 if (firstHalf < 0)
                 {
                     firstHalf += str.Length;
@@ -33,8 +33,8 @@ public static class BWT
                 countingSortArray[countingSortHelper[firstHalf]].Add((countingSortHelper[secondHalf], firstHalf));
             }
 
-            int countNewShift = 0;
-            int shiftIndex = 0;
+            var countNewShift = 0;
+            var shiftIndex = 0;
             foreach (var element in countingSortArray)
             {
                 int lastShiftNumber = -1;
