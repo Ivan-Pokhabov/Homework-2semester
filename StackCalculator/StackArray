@@ -1,18 +1,35 @@
 namespace StackCalculator
 
+/// <summary>
+/// Class that realize stack contains doubles on array and interface IStack
+/// </summary>
 public class StackArray: IStack
 {
+    /// <summary>
+    /// Index to the top element of stack in array
+    /// Equal -1 if array is empty
+    /// </summary>
     private var topIndex = -1;
 
+    /// <summary>
+    /// Size of array that keeps stack elements
+    /// </summary>
     private var arraySize = 1;
 
+    /// <summary>
+    /// Array that keeps stack elements
+    /// </summary>
     private double[] stack;
 
+    /// <summary>
+    /// Initializes a new instance of the StackArray class
+    /// </summary>
     public StackArray()
     {
         this.stack = new double[this.arraySize];
     }
 
+    /// <inheritdoc />
     public void Push(double element)
     {
         ResizeArray();
@@ -22,6 +39,7 @@ public class StackArray: IStack
         stack[topIndex] = element;
     }
 
+    /// <inheritdoc />
     public double Pop()
     {
         if (IsEmpty()) 
@@ -34,8 +52,12 @@ public class StackArray: IStack
         return stack[topIndex - 1];
     }
 
+    /// <inheritdoc />
     public bool IsEmpty() => topIndex == -1;
 
+    /// <summary>
+    /// Method to resize array if it needs
+    /// </summary>
     private void ResizeArray()
     {
         if (topIndex + 1 < arraySize) => ;
