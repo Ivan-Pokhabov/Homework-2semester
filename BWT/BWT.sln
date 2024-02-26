@@ -1,9 +1,11 @@
-
+﻿
 Microsoft Visual Studio Solution File, Format Version 12.00
 # Visual Studio Version 17
 VisualStudioVersion = 17.8.34525.116
 MinimumVisualStudioVersion = 10.0.40219.1
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "BWT", "BWT.csproj", "{45B1167F-F419-42B5-B779-E0D74E627C37}"
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "BWT", "BWT\BWT.csproj", "{45B1167F-F419-42B5-B779-E0D74E627C37}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "BWTTest", "BWTTest\BWTTest.csproj", "{05E65E3A-1F62-4713-AF06-0D75269A88A8}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -15,6 +17,10 @@ Global
 		{45B1167F-F419-42B5-B779-E0D74E627C37}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{45B1167F-F419-42B5-B779-E0D74E627C37}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{45B1167F-F419-42B5-B779-E0D74E627C37}.Release|Any CPU.Build.0 = Release|Any CPU
+		{05E65E3A-1F62-4713-AF06-0D75269A88A8}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{05E65E3A-1F62-4713-AF06-0D75269A88A8}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{05E65E3A-1F62-4713-AF06-0D75269A88A8}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{05E65E3A-1F62-4713-AF06-0D75269A88A8}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE

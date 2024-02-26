@@ -17,6 +17,7 @@ public static class BWT
                 BWTString.Append(str[sortedShifts[i] - 1]);
             }
         }
+
         return (BWTString.ToString(), originalStringIndex);
     }
 
@@ -26,10 +27,10 @@ public static class BWT
         {
             return string.Empty;
         }
+
         if (originalStringIndex <= 0 || originalStringIndex > BWTString.Length)
         {
-            Console.WriteLine("Incorrect input");
-            return string.Empty;
+            throw new ArgumentOutOfRangeException(paramName: nameof(originalStringIndex));
         }
         
         var shifts = Enumerable.Range(0, BWTString.Length).ToArray();
@@ -42,6 +43,7 @@ public static class BWT
             originalString.Append(BWTString[currentSymbolIndex]);
             currentSymbolIndex = shifts[currentSymbolIndex];
         }
+
         return originalString.ToString();
     }
     
@@ -63,18 +65,19 @@ public static class BWT
         for (var k = 1; k < str.Length; k *= 2)
         {
             var countingSortArray = new List<(int, int)>[str.Length];
-            for(var h = 0; h < str.Length; ++h)
+            for (var h = 0; h < str.Length; ++h)
             {
                 countingSortArray[h] = new List<(int, int)>();
             }
 
-            foreach(var secondHalf in shifts)
+            foreach (var secondHalf in shifts)
             {
                 var firstHalf = secondHalf - k;
                 if (firstHalf < 0)
                 {
                     firstHalf += str.Length;
                 }
+
                 countingSortArray[countingSortHelper[firstHalf]].Add((countingSortHelper[secondHalf], firstHalf));
             }
 
@@ -91,14 +94,17 @@ public static class BWT
                         ++countNewShift;
                         lastShiftNumber = currentShiftNumber;
                     }
+
                     countingSortHelper[currentShiftPosition] = countNewShift - 1;
                 }
             }
+
             if (countNewShift == str.Length)
             {
                 break;
             }
         }
+
         return shifts;
     }
 }
