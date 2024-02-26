@@ -26,14 +26,15 @@ public class StackList : IStack
     /// <inheritdoc />
     public double Pop()
     {
-        if (IsEmpty()) 
+        if (IsEmpty())
         {
             throw new InvalidOperationException("Can't to Pop() from empty stack");
         }
 
-        --topIndex;
+        var temp = stack[0];
+        stack.RemoveAt(0);
 
-        return stack[topIndex - 1];
+        return temp;
     }
 
     /// <inheritdoc />
