@@ -1,44 +1,46 @@
-﻿Console.WriteLine("""
-    1 - Encode string by BWT
-    2 - Decode string after BWT
-    """);
+﻿Console.WriteLine("Program of BWT:\n1 - Direct BWT\n2 - Reverse BWT");
 
-switch (Console.ReadLine())
+switch(Console.ReadLine())
 {
     case "1":
     {
-            Console.WriteLine("Enter your string: ");
-            var inputString = Console.ReadLine();
+        Console.WriteLine("Enter string: ");
 
-            var (BWTString, originalStringIndex) = BWT.Transform(inputString);
-            Console.WriteLine($"Encoded string: {BWTString}\nIndex of the original string: {originalStringIndex}");
-            break;
+        var inputString = Console.ReadLine();
+        
+        var (resultString, originalStringIndex) = BWT.Transform(inputString);
+
+        Console.WriteLine($"Result of direct BWT: {resultString}, {originalStringIndex}");
+
+        break;
     }
+
     case "2":
     {
-            Console.WriteLine("Enter string after BWT and its index: ");
-            var parameters = Console.ReadLine();
+        Console.WriteLine("Enter result of direct BWT(separated by space):");
 
-            var stringArray = parameters.Split(' ');
-            if (stringArray.Length != 2)
-            {
-                return -2;
-            }
+        var input = Console.ReadLine();
 
-            if (!Int32.TryParse(stringArray[1], out var lastIndex))
-            {
-                Console.WriteLine("Invalid number input");
-                return -2;
-            }
+        var BWTResult = input.Split();
+        if (BWTResult.Length != 2)
+        {
+            Console.WriteLine("You can't add not 2 arguments");
+            return;
+        }
 
-            Console.WriteLine($"Decoded string: {BWT.ReverseTransform(stringArray[0], lastIndex)}");
+        if (!int.TryParse(BWTResult[1], out int index))
+        {
+            Console.WriteLine("Second variable should be number");
+            return;
+        }
 
-            break;
+        Console.WriteLine($"Result of reverse transformation: {BWT.ReverseTransform(BWTResult[0], index)}");
+        break;
     }
+
     default:
     {
-            Console.WriteLine("Incorrect number option");
-            return -2;
+        Console.WriteLine("Invalid input");
+        break;
     }
 }
-return 0;
