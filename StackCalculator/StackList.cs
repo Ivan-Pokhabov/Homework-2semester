@@ -8,14 +8,7 @@ public class StackList : IStack
     /// <summary>
     /// List that keeps stack elements
     /// </summary>
-    private var stack = new List<double>();
-
-    /// <summary>
-    /// Initializes a new instance of the StackList class
-    /// </summary>
-    public StackList()
-    {
-    }
+    private List<double> stack = new List<double>();
 
     /// <inheritdoc />
     public void Push(double element)
@@ -28,7 +21,7 @@ public class StackList : IStack
     {
         if (IsEmpty())
         {
-            throw new InvalidOperationException("Can't to Pop() from empty stack");
+            throw new InvalidOperationException("Can't to take top from empty stack");
         }
 
         var temp = stack[0];

@@ -122,9 +122,7 @@ public class Calculator
 
             case '/':
             {
-                return Math.Abs(secondNumber) < 0.0000000000001D
-                    ? (0D, false)
-                    : (firstNumber / secondNumber, true);
+                return Math.Abs(secondNumber) < 0.0000000000001D ? (0D, false) : (firstNumber / secondNumber, true);
             }
 
             default:

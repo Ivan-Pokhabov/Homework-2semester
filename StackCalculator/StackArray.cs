@@ -9,12 +9,12 @@ public class StackArray : IStack
     /// Index to the top element of stack in array
     /// Equal -1 if array is empty
     /// </summary>
-    private var topIndex = -1;
+    private int topIndex = -1;
 
     /// <summary>
     /// Size of array that keeps stack elements
     /// </summary>
-    private var arraySize = 1;
+    private int arraySize = 1;
 
     /// <summary>
     /// Array that keeps stack elements
@@ -60,7 +60,10 @@ public class StackArray : IStack
     /// </summary>
     private void ResizeArray()
     {
-        if (topIndex + 1 < arraySize) => ;
+        if (topIndex + 1 < arraySize) 
+        {
+            return;
+        }
 
         arraySize *= 2;
 
