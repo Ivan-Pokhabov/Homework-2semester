@@ -15,7 +15,6 @@ public class UnitTest1
     [DataRow("ABACABA", "BCABAAA", 3), DataRow("abcd", "dabc", 1), DataRow("", "", 1)]
     public void BWTReverseTransformTest(string expectedOriginalWord, string BWTWord, int originalWordIndex)
     {
-        var originalWord = BWT.ReverseTransform(BWTWord, originalWordIndex);
-        Assert.IsTrue(expectedOriginalWord == originalWord);
+        Assert.IsTrue(expectedOriginalWord == BWT.ReverseTransform(BWTWord, originalWordIndex));
     }
 }
