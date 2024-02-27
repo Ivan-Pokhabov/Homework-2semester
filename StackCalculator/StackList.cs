@@ -21,7 +21,7 @@ public class StackList : IStack
     {
         if (IsEmpty())
         {
-            throw new InvalidOperationException("Can't to take top from empty stack");
+            throw new InvalidOperationException("Can't to make pop from empty stack");
         }
 
         var temp = stack[0];

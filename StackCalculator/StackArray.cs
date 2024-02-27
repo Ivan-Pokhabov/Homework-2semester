@@ -19,15 +19,7 @@ public class StackArray : IStack
     /// <summary>
     /// Array that keeps stack elements
     /// </summary>
-    private double[] stack;
-
-    /// <summary>
-    /// Initializes a new instance of the StackArray class
-    /// </summary>
-    public StackArray()
-    {
-        this.stack = new double[this.arraySize];
-    }
+    private double[] stack = new double[1];
 
     /// <inheritdoc />
     public void Push(double element)
@@ -44,7 +36,7 @@ public class StackArray : IStack
     {
         if (IsEmpty()) 
         {
-            throw new InvalidOperationException("Can't to Pop() from empty stack");
+            throw new InvalidOperationException("Can't make pop from empty stack");
         }
 
         --topIndex;
