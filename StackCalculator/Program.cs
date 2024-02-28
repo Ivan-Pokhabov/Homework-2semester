@@ -1,17 +1,25 @@
 ﻿using StackCalculator;
 
-Console.WriteLine("Enter your postfix expression: ");
+Console.WriteLine("Enter your postfix expression(it should include only real numbers and operations separated by space): ");
 
 var expression = Console.ReadLine();
 
-// Can use StackList instead of StackArray
-var calculator = new Calculator(new StackArray());
+var stackArrayCalculator = new Calculator(new StackArray());
+var stackListCalculator = new Calculator(new StackList());
 
-var (result, isCorrect) = calculator.CalculatePostfixExpression(expression);
-if (!isCorrect)
+var (result1, isCorrect1) = stackArrayCalculator.CalculatePostfixExpression(expression);
+var (result2, isCorrect2) = stackListCalculator.CalculatePostfixExpression(expression);
+
+if ((result1, isCorrect1) != (result2, isCorrect2))
 {
-    Console.WriteLine("Expression contains division by zero(");
+    Console.WriteLine("Program doesn't work correct");
     return;
 }
 
-Console.WriteLine($"Result of expression: {result}");
+if (!isCorrect1)
+{
+    Console.WriteLine("Expression contains division by zero");
+    return;
+}
+
+Console.WriteLine($"Result of expression: {result1}");
