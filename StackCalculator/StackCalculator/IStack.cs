@@ -1,7 +1,7 @@
 namespace StackCalculator;
 
 /// <summary>
-/// Stack, a first-in-first-out container for double values.
+/// Stack, a last-in-first-out container for double values.
 /// </summary>
 public interface IStack
 {
