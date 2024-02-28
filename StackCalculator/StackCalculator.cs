@@ -54,8 +54,8 @@ public class Calculator
 
                 try 
                 {
-                    firstNumber = stack.Pop();
                     secondNumber = stack.Pop();
+                    firstNumber = stack.Pop();
                 }
                 catch
                 {

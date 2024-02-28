@@ -41,7 +41,7 @@ public class StackArray : IStack
 
         --topIndex;
 
-        return stack[topIndex - 1];
+        return stack[topIndex + 1];
     }
 
     /// <inheritdoc />
