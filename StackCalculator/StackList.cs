@@ -13,7 +13,7 @@ public class StackList : IStack
     /// <inheritdoc />
     public void Push(double element)
     {
-        stack.Insert(0, element);
+        stack.Add(element);
     }
 
     /// <inheritdoc />
@@ -24,8 +24,8 @@ public class StackList : IStack
             throw new InvalidOperationException("Can't to make pop from empty stack");
         }
 
-        var temp = stack[0];
-        stack.RemoveAt(0);
+        var temp = stack[^1];
+        stack.RemoveAt(stack.Count - 1);
 
         return temp;
     }
