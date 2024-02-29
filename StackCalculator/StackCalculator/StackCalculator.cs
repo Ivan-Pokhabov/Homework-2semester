@@ -34,6 +34,11 @@ public class Calculator
             throw new ArgumentNullException(nameof(expression), "Can't be null");
         }
 
+        if (expression == String.Empty)
+        {
+            throw new ArgumentException(nameof(expression), "Can't be empty");
+        }
+
         var expressionElements = expression.Split();
 
         foreach (var element in expressionElements)
