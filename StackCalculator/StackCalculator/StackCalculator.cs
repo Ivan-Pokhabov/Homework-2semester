@@ -1,32 +1,32 @@
 namespace StackCalculator;
 
 /// <summary>
-/// Class of calculating postfix expressionn
+/// Class of calculating postfix expressionn.
 /// </summary>
 public class Calculator
 {
     /// <summary>
-    /// Stack that contains numbers that we will need for operations
+    /// Stack that contains numbers that we will need for operations.
     /// </summary>
     private readonly IStack stack;
 
     /// <summary>
-    /// Initialize a new instance of <see cref="Calculator"/> class
+    /// Initializes a new instance of the <see cref="Calculator"/> class.
     /// </summary>
-    /// <param name="stack"> Stack that we will use as stack for numbers</param>
-    /// <exception cref="ArgumentNullException"> Stack can't be null</exception>
+    /// <param name="stack">Stack for counting.</param>
+    /// <exception cref="ArgumentNullException">Stack can't be null.</exception>
     public Calculator(IStack stack)
     {
         this.stack = stack ?? throw new ArgumentNullException(nameof(stack), "Can't be null");
     }
 
     /// <summary>
-    /// Calculate expression in postfix format
+    /// Calculate expression in postfix format.
     /// </summary>
-    /// <param name="expression">String with math expression in postfix format</param>
-    /// <returns>(0, false) if expression contains division by zero else (result of calculating, true)</returns>
-    /// <exception cref="ArgumentNullException">Expression can't be null</exception>
-    /// <exception cref="ArgumentException">Not valid expression</exception>
+    /// <param name="expression">String with math expression in postfix format.</param>
+    /// <returns>(0, false) if expression contains division by zero else (result of calculating, true).</returns>
+    /// <exception cref="ArgumentNullException">Expression can't be null.</exception>
+    /// <exception cref="ArgumentException">Not valid expression.</exception>
     public (double, bool) CalculatePostfixExpression(string expression)
     {
         if (expression == null)
@@ -34,7 +34,7 @@ public class Calculator
             throw new ArgumentNullException(nameof(expression), "Can't be null");
         }
 
-        if (expression == String.Empty)
+        if (expression == string.Empty)
         {
             throw new ArgumentException(nameof(expression), "Can't be empty");
         }
@@ -45,11 +45,11 @@ public class Calculator
         {
             if (double.TryParse(element, out double result))
             {
-                stack.Push(result);
+                this.stack.Push(result);
             }
             else
             {
-                if (!IsOperation(element[0]))
+                if (!this.IsOperation(element[0]))
                 {
                     throw new ArgumentException(nameof(expression), "Can't contains anything except numbers and operations");
                 }
@@ -57,38 +57,38 @@ public class Calculator
                 double firstNumber;
                 double secondNumber;
 
-                try 
+                try
                 {
-                    secondNumber = stack.Pop();
-                    firstNumber = stack.Pop();
+                    secondNumber = this.stack.Pop();
+                    firstNumber = this.stack.Pop();
                 }
                 catch
                 {
                     throw new ArgumentException("Expression is invalid", nameof(expression));
                 }
 
-                var (operationResult, success) = CalculateOperation(firstNumber, secondNumber, element[0]);
+                var (operationResult, success) = this.CalculateOperation(firstNumber, secondNumber, element[0]);
 
                 if (!success)
                 {
                     return (0D, false);
                 }
 
-                stack.Push(operationResult);
+                this.stack.Push(operationResult);
             }
         }
 
         double answer;
         try
         {
-            answer = stack.Pop();
+            answer = this.stack.Pop();
         }
         catch
         {
             throw new ArgumentException("Expression is invalid", nameof(expression));
         }
 
-        if (!stack.IsEmpty())
+        if (!this.stack.IsEmpty())
         {
             throw new ArgumentException("Expression is invalid", nameof(expression));
         }
@@ -97,21 +97,21 @@ public class Calculator
     }
 
     /// <summary>
-    /// Check is symbol operation or not
+    /// Check is symbol operation or not.
     /// </summary>
-    /// <param name="symbol"></param>
-    /// <returns>true if symbol is operation else false</returns>
+    /// <param name="symbol">Symbol that we checks.</param>
+    /// <returns>true if symbol is operation else false.</returns>
     private bool IsOperation(char symbol)
         => symbol == '+' || symbol == '-' || symbol == '*' || symbol == '/';
 
     /// <summary>
-    /// Calculate expression with 1 operation
+    /// Calculate expression with 1 operation.
     /// </summary>
-    /// <param name="firstNumber">first number in expression</param>
-    /// <param name="secondNumber">second number in expression</param>
-    /// <param name="operation"></param>
-    /// <returns>(0, false) if it is division by zero else (result, true)</returns>
-    /// <exception cref="ArgumentException">operation should be real math operation</exception>
+    /// <param name="firstNumber">first number in expression.</param>
+    /// <param name="secondNumber">second number in expression.</param>
+    /// <param name="operation">Arithmetic operation.</param>
+    /// <returns>(0, false) if it is division by zero else (result, true).</returns>
+    /// <exception cref="ArgumentException">operation should be real math operation.</exception>
     private (double, bool) CalculateOperation(double firstNumber, double secondNumber, char operation)
     {
         switch (operation)
@@ -134,4 +134,4 @@ public class Calculator
                 throw new ArgumentException("Not operation sign", nameof(operation));
         }
     }
-} 
+}

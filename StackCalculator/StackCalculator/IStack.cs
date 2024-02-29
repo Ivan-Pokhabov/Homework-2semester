@@ -10,7 +10,7 @@ public interface IStack
     /// </summary>
     /// <param name="element">New element that will be added to stack.</param>
     void Push(double element);
-    
+
     /// <summary>
     /// Get element from the top of stack and removes it.
     /// </summary>
@@ -21,6 +21,6 @@ public interface IStack
     /// <summary>
     /// Check is empty stack or not.
     /// </summary>
-    /// <returns>True if stack is empty else false</returns>
+    /// <returns>True if stack is empty else false.</returns>
     bool IsEmpty();
 }

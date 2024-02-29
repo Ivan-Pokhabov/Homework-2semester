@@ -40,7 +40,7 @@ public class StackCalculatorTests
     [TestCaseSource(nameof(StackCalculator))]
     public void CalculatorWithEmptyExpressionShouldThrowException(Calculator calculator)
     {
-        Assert.Throws<ArgumentException>(() => calculator.CalculatePostfixExpression(String.Empty));
+        Assert.Throws<ArgumentException>(() => calculator.CalculatePostfixExpression(string.Empty));
     }
 
     [TestCaseSource(nameof(StackCalculator))]

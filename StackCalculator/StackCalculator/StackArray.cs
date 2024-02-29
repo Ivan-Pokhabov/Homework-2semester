@@ -1,67 +1,67 @@
 namespace StackCalculator;
 
 /// <summary>
-/// Class that realize stack contains doubles on array and interface IStack
+/// Class that realize stack contains doubles on array and interface IStack.
 /// </summary>
 public class StackArray : IStack
 {
     /// <summary>
     /// Index to the top element of stack in array
-    /// Equal -1 if array is empty
+    /// Equal -1 if array is empty.
     /// </summary>
     private int topIndex = -1;
 
     /// <summary>
-    /// Size of array that keeps stack elements
+    /// Size of array that keeps stack elements.
     /// </summary>
     private int arraySize = 1;
 
     /// <summary>
-    /// Array that keeps stack elements
+    /// Array that keeps stack elements.
     /// </summary>
     private double[] stack = new double[1];
 
     /// <inheritdoc />
     public void Push(double element)
     {
-        ResizeArray();
+        this.ResizeArray();
 
-        ++topIndex;
+        ++this.topIndex;
 
-        stack[topIndex] = element;
+        this.stack[this.topIndex] = element;
     }
 
     /// <inheritdoc />
     public double Pop()
     {
-        if (IsEmpty()) 
+        if (this.IsEmpty())
         {
             throw new InvalidOperationException("Can't make pop from empty stack");
         }
 
-        --topIndex;
+        --this.topIndex;
 
-        return stack[topIndex + 1];
+        return this.stack[this.topIndex + 1];
     }
 
     /// <inheritdoc />
-    public bool IsEmpty() => topIndex == -1;
+    public bool IsEmpty() => this.topIndex == -1;
 
     /// <summary>
-    /// Method to resize array if it needs
+    /// Method to resize array if it needs.
     /// </summary>
     private void ResizeArray()
     {
-        if (topIndex + 1 < arraySize) 
+        if (this.topIndex + 1 < this.arraySize)
         {
             return;
         }
 
-        arraySize *= 2;
+        this.arraySize *= 2;
 
-        var temp = new double[arraySize];
-        stack.CopyTo(temp, 0);
+        var temp = new double[this.arraySize];
+        this.stack.CopyTo(temp, 0);
 
-        stack = temp;
+        this.stack = temp;
     }
 }
