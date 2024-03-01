@@ -98,4 +98,24 @@ public class Trie
         current.IsTerminal = false;
         return true;
     }
+
+    public int HowManyStartsWithPrefix(string prefix)
+    {
+        if (prefix == null)
+        {
+            throw new ArgumentNullException(nameof(prefix), "Can't be null");
+        }
+
+        TrieVertex current = this.root;
+
+        foreach (var symbol in prefix)
+        {
+            if (!current.childrens.ContainsKey(symbol))
+            {
+                return 0;
+            }
+        }
+
+        return current.PrefixCount;
+    }
 }
