@@ -71,6 +71,7 @@ public class Trie
             {
                 return false;
             }
+
             current = current.Childrens[symbol];
         }
 
