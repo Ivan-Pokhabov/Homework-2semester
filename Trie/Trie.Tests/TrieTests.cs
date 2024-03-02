@@ -13,10 +13,10 @@ public class TrieTests
         trie = new ();
     }
 
-    [TestCase("matmeh"), TestCase(""), TestCase("aaa")]
+    [TestCase("xuy"), TestCase(""), TestCase("aaa")]
     public void TrieAddNewWordAndCheckContainsWorkedCorrectly(string word)
     {
         trie.Add(word);
-        Assert.IsTrue(true);
+        Assert.IsTrue(trie.Contains(word));
     }
 }

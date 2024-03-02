@@ -46,6 +46,7 @@ public class Trie
 
         ++this.Size;
         current.IsTerminal = true;
+
         return true;
     }
 
@@ -70,6 +71,7 @@ public class Trie
             {
                 return false;
             }
+            current = current.Childrens[symbol];
         }
 
         return current.IsTerminal;
