@@ -125,6 +125,38 @@ public class TrieTests
     }
 
     [Test]
+    public void TrieHowManyStartsWithPrefixWorksCorrectlyWithAdd()
+    {
+        string[] words = new string[] {"Matmeh", "mama", "mat", "aaa", "aa"};
+
+        foreach (var word in words)
+        {
+            trie.Add(word);
+        }
+
+        Assert.That(trie.HowManyStartsWithPrefix("Matm") == 1 && trie.HowManyStartsWithPrefix("ma") == 2 && 
+            trie.HowManyStartsWithPrefix("a") == 2 && trie.HowManyStartsWithPrefix("aaa") == 1);
+    }
+
+    [Test]
+    public void TrieHowManyStartsWithPrefixWorksCorrectlyWithRemove()
+    {
+        string[] words = new string[] {"Matmeh", "mama", "mat", "aaa", "aa"};
+
+        foreach (var word in words)
+        {
+            trie.Add(word);
+        }
+
+        trie.Remove("aa");
+        trie.Remove("mama");
+        trie.Remove("Matmeh");
+
+        Assert.That(trie.HowManyStartsWithPrefix("Matm") == 0 && trie.HowManyStartsWithPrefix("ma") == 1 && 
+            trie.HowManyStartsWithPrefix("a") == 1 && trie.HowManyStartsWithPrefix("aaa") == 1);
+    }
+
+    [Test]
     public void TrieAddWithNullArgumentThrowException()
     {
         Assert.Throws<ArgumentNullException>(() => trie.Add(null));
