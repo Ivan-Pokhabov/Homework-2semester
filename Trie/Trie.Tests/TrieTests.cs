@@ -44,6 +44,7 @@ public class TrieTests
                 Assert.Fail();
             }
         }
+
         Assert.Pass();
     }
 
@@ -60,6 +61,7 @@ public class TrieTests
             }
 
             trie.Add(word);
+            trie.Add(word);
             ++expectedSize;
         }
 
@@ -71,9 +73,72 @@ public class TrieTests
             }
 
             trie.Remove(word);
+            trie.Remove(word);
             --expectedSize;
         }
 
         Assert.Pass();
+    }
+    
+    [TestCaseSource(nameof(TestCasesWithDifferentWords))]
+    public void TrieContainsAfterRemoveWorksCorrectly(string[] words)
+    {
+        foreach (var word in words)
+        {
+            trie.Add(word);
+        }
+
+        foreach (var word in words)
+        {
+            trie.Remove(word);
+
+            if (trie.Contains(word))
+            {
+                Assert.Fail();
+            }
+        }
+
+        Assert.Pass();
+    }
+
+    [TestCaseSource(nameof(TestCasesWithDifferentWords))]
+    public void TrieAddAndRemoveReturnCorrectlyWorks(string[] words)
+    {
+        foreach (var word in words)
+        {
+            if (trie.Remove(word) || !trie.Add(word))
+            {
+                Assert.Fail();
+            }
+
+        }
+
+        foreach (var word in words)
+        {
+            if (trie.Add(word) || !trie.Remove(word))
+            {
+                Assert.Fail();
+            }
+        }
+
+        Assert.Pass();
+    }
+
+    [Test]
+    public void TrieAddWithNullArgumentThrowException()
+    {
+        Assert.Throws<ArgumentNullException>(() => trie.Add(null));
+    }
+
+    [Test]
+    public void TrieRemovwWithNullArgumentThrowException()
+    {
+        Assert.Throws<ArgumentNullException>(() => trie.Remove(null));
+    }
+
+    [Test]
+    public void TrieContainsWithNullArgumentThrowException()
+    {
+        Assert.Throws<ArgumentNullException>(() => trie.Contains(null));
     }
 }
