@@ -18,11 +18,16 @@ public class Trie
     /// <param name="element">Word that we adds.</param>
     /// <returns>True if word wasn't in trie else false.</returns>
     /// <exception cref="ArgumentNullException">Word can't be null.</exception>
-    public bool Add(string element)
+    public bool Add(string? element)
     {
         if (element == null)
         {
             throw new ArgumentNullException(nameof(element), "Can't be null");
+        }
+
+        if (this.Contains(element))
+        {
+            return false;
         }
 
         TrieVertex current = this.root;
@@ -39,11 +44,6 @@ public class Trie
             ++current.PrefixCount;
         }
 
-        if (current.IsTerminal)
-        {
-            return false;
-        }
-
         ++this.Size;
         current.IsTerminal = true;
 
@@ -56,7 +56,7 @@ public class Trie
     /// <param name="element">Word that we check.</param>
     /// <returns>True if word in trie else false.</returns>
     /// <exception cref="ArgumentNullException">Word can't be null.</exception>
-    public bool Contains(string element)
+    public bool Contains(string? element)
     {
         if (element == null)
         {
@@ -84,7 +84,7 @@ public class Trie
     /// <param name="element">Word that we should delete.</param>
     /// <returns>True if word was in trie else false.</returns>
     /// <exception cref="ArgumentNullException">Word can't be null.</exception>
-    public bool Remove(string element)
+    public bool Remove(string? element)
     {
         if (element == null)
         {
@@ -123,7 +123,7 @@ public class Trie
     /// <param name="prefix">Prefix that we check.</param>
     /// <returns>Number of words in trie that starts with this prefix.</returns>
     /// <exception cref="ArgumentNullException">Prefix can't be null.</exception>
-    public int HowManyStartsWithPrefix(string prefix)
+    public int HowManyStartsWithPrefix(string? prefix)
     {
         if (prefix == null)
         {
@@ -138,6 +138,8 @@ public class Trie
             {
                 return 0;
             }
+
+            current = current.Childrens[symbol];
         }
 
         return current.PrefixCount;
