@@ -9,7 +9,7 @@ while (true)
     Console.WriteLine("""
         Choose command:
         1 - Add word to tree
-        2 - Remove word to tree
+        2 - Remove word from tree
         3 - Check does trie contain word
         4 - Get number of words with prefix
         5 - Get number of words in trie
