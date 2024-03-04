@@ -59,9 +59,6 @@ public class StackArray : IStack
 
         this.arraySize *= 2;
 
-        var temp = new double[this.arraySize];
-        this.stack.CopyTo(temp, 0);
-
-        this.stack = temp;
+        Array.Resize(ref this.stack, this.arraySize);
     }
 }
