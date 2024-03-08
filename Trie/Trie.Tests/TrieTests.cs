@@ -33,7 +33,7 @@ public class TrieTests
     }
     
     [TestCaseSource(nameof(TestCasesWithRepeatedWords)), TestCaseSource(nameof(TestCasesWithDifferentWords))]
-    public void TrieAddNewWordAndContainsWorkedCorrectly(string[] words)
+    public void Contains_WithAddNewWord_ShouldReturnCorrectResult(string[] words)
     {
         foreach (var word in words)
         {
@@ -49,7 +49,7 @@ public class TrieTests
     }
 
     [TestCaseSource(nameof(TestCasesWithDifferentWords))]
-    public void TrieAddAndRemovesWithDifferentWordsKeepSizeCorrectly(string[] words)
+    public void Size_WithAddAndRemoveDifferentWords_ShouldReturnCorrectResult(string[] words)
     {
         var expectedSize = 0;
 
@@ -81,7 +81,7 @@ public class TrieTests
     }
     
     [TestCaseSource(nameof(TestCasesWithDifferentWords))]
-    public void TrieContainsAfterRemoveWorksCorrectly(string[] words)
+    public void Contains_WithRemoveDifferentWords_ShouldReturnCorrectResult(string[] words)
     {
         foreach (var word in words)
         {
@@ -102,7 +102,7 @@ public class TrieTests
     }
 
     [TestCaseSource(nameof(TestCasesWithDifferentWords))]
-    public void TrieAddAndRemoveReturnCorrectlyWorks(string[] words)
+    public void AddAndRemove_WithDifferentWords_ShouldReturnCorrectResult(string[] words)
     {
         foreach (var word in words)
         {
@@ -110,7 +110,6 @@ public class TrieTests
             {
                 Assert.Fail();
             }
-
         }
 
         foreach (var word in words)
@@ -125,7 +124,7 @@ public class TrieTests
     }
 
     [Test]
-    public void TrieHowManyStartsWithPrefixWorksCorrectlyWithAdd()
+    public void HowManyStartsWithPrefix_ShouldReturnCorrectResult()
     {
         string[] words = new string[] {"Matmeh", "mama", "mat", "aaa", "aa"};
 
@@ -139,7 +138,7 @@ public class TrieTests
     }
 
     [Test]
-    public void TrieHowManyStartsWithPrefixWorksCorrectlyWithRemove()
+    public void HowManyStartsWithPrefix_WithRemove_ShouldReturnCorrectResult()
     {
         string[] words = new string[] {"Matmeh", "mama", "mat", "aaa", "aa"};
 
@@ -157,20 +156,26 @@ public class TrieTests
     }
 
     [Test]
-    public void TrieAddWithNullArgumentThrowException()
+    public void Add_WithNull_ShouldThrowException()
     {
         Assert.Throws<ArgumentNullException>(() => trie.Add(null));
     }
 
     [Test]
-    public void TrieRemovwWithNullArgumentThrowException()
+    public void Remove_WithNull_ShouldThrowException()
     {
         Assert.Throws<ArgumentNullException>(() => trie.Remove(null));
     }
 
     [Test]
-    public void TrieContainsWithNullArgumentThrowException()
+    public void Contains_WithNull_ShouldThrowException()
     {
         Assert.Throws<ArgumentNullException>(() => trie.Contains(null));
+    }
+
+    [Test]
+    public void HowManyStartsWithPrefix_WithNull_ShouldThrowException()
+    {
+        Assert.Throws<ArgumentNullException>(() => trie.HowManyStartsWithPrefix(null));
     }
 }
