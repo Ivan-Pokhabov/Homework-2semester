@@ -11,13 +11,13 @@ public class StackTests
     }
 
     [TestCaseSource(nameof(Stack))]
-    public void PopFromEmptyStackTest(IStack stack)
+    public void Pop_FromEmptyStack_ShouldThrowException(IStack stack)
     {
         Assert.Throws(typeof(InvalidOperationException), () => stack.Pop());
     }
 
     [TestCaseSource(nameof(Stack))]
-    public void EmptyFunctionAfterOperationsTest(IStack stack)
+    public void Empty_AfterPop_ShouldReturnTrue(IStack stack)
     {
         var emptyStackResult = stack.IsEmpty();
 
@@ -31,7 +31,7 @@ public class StackTests
     }
 
     [TestCaseSource(nameof(Stack))]
-    public void PopAndPushWorksCorrectlyTest(IStack stack)
+    public void PopAndPush_WorksCorrectly(IStack stack)
     {
         stack.Push(2);
         stack.Push(3);

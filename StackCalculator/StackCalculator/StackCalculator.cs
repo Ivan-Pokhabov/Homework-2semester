@@ -5,9 +5,6 @@ namespace StackCalculator;
 /// </summary>
 public class Calculator
 {
-    /// <summary>
-    /// Stack that contains numbers that we will need for operations.
-    /// </summary>
     private readonly IStack stack;
 
     /// <summary>
@@ -17,7 +14,7 @@ public class Calculator
     /// <exception cref="ArgumentNullException">Stack can't be null.</exception>
     public Calculator(IStack stack)
     {
-        this.stack = stack ?? throw new ArgumentNullException(nameof(stack), "Can't be null");
+        this.stack = stack ?? throw new ArgumentNullException(nameof(stack));
     }
 
     /// <summary>
@@ -29,15 +26,7 @@ public class Calculator
     /// <exception cref="ArgumentException">Not valid expression.</exception>
     public (double, bool) CalculatePostfixExpression(string expression)
     {
-        if (expression == null)
-        {
-            throw new ArgumentNullException(nameof(expression), "Can't be null");
-        }
-
-        if (expression == string.Empty)
-        {
-            throw new ArgumentException(nameof(expression), "Can't be empty");
-        }
+        ArgumentException.ThrowIfNullOrEmpty(expression);
 
         var expressionElements = expression.Split();
 
@@ -49,32 +38,10 @@ public class Calculator
             }
             else
             {
-                if (!this.IsOperation(element[0]))
-                {
-                    throw new ArgumentException(nameof(expression), "Can't contains anything except numbers and operations");
-                }
-
-                double firstNumber;
-                double secondNumber;
-
-                try
-                {
-                    secondNumber = this.stack.Pop();
-                    firstNumber = this.stack.Pop();
-                }
-                catch
-                {
-                    throw new ArgumentException("Expression is invalid", nameof(expression));
-                }
-
-                var (operationResult, success) = this.CalculateOperation(firstNumber, secondNumber, element[0]);
-
-                if (!success)
+                if (!this.TryMakeOperarion(expression, element[0]))
                 {
                     return (0D, false);
                 }
-
-                this.stack.Push(operationResult);
             }
         }
 
@@ -83,7 +50,7 @@ public class Calculator
         {
             answer = this.stack.Pop();
         }
-        catch
+        catch (InvalidOperationException)
         {
             throw new ArgumentException("Expression is invalid", nameof(expression));
         }
@@ -96,23 +63,37 @@ public class Calculator
         return (answer, true);
     }
 
-    /// <summary>
-    /// Check is symbol operation or not.
-    /// </summary>
-    /// <param name="symbol">Symbol that we checks.</param>
-    /// <returns>true if symbol is operation else false.</returns>
+    private bool TryMakeOperarion(string expression, char operation)
+    {
+        if (!this.IsOperation(operation))
+            {
+                throw new ArgumentException(nameof(expression), "Can't contains anything except numbers and operations");
+            }
+
+        double firstNumber;
+        double secondNumber;
+
+        try
+            {
+                secondNumber = this.stack.Pop();
+                firstNumber = this.stack.Pop();
+            }
+        catch (InvalidOperationException)
+            {
+                throw new ArgumentException("Expression is invalid", nameof(expression));
+            }
+
+        var (operationResult, success) = this.TryCalculateOperation(firstNumber, secondNumber, operation);
+
+        this.stack.Push(operationResult);
+
+        return success;
+    }
+
     private bool IsOperation(char symbol)
         => symbol == '+' || symbol == '-' || symbol == '*' || symbol == '/';
 
-    /// <summary>
-    /// Calculate expression with 1 operation.
-    /// </summary>
-    /// <param name="firstNumber">first number in expression.</param>
-    /// <param name="secondNumber">second number in expression.</param>
-    /// <param name="operation">Arithmetic operation.</param>
-    /// <returns>(0, false) if it is division by zero else (result, true).</returns>
-    /// <exception cref="ArgumentException">operation should be real math operation.</exception>
-    private (double, bool) CalculateOperation(double firstNumber, double secondNumber, char operation)
+    private (double, bool) TryCalculateOperation(double firstNumber, double secondNumber, char operation)
     {
         switch (operation)
         {

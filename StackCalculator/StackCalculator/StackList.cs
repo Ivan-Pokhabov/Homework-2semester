@@ -1,13 +1,10 @@
 namespace StackCalculator;
 
 /// <summary>
-/// Class that realize stack contains doubles on List and interface IStack.
+/// Class that implement stack contains doubles on List and interface IStack.
 /// </summary>
 public class StackList : IStack
 {
-    /// <summary>
-    /// List that keeps stack elements.
-    /// </summary>
     private List<double> stack = new List<double>();
 
     /// <inheritdoc />
