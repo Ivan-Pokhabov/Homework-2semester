@@ -66,22 +66,22 @@ public class Calculator
     private bool TryMakeOperarion(string expression, char operation)
     {
         if (!this.IsOperation(operation))
-            {
-                throw new ArgumentException(nameof(expression), "Can't contains anything except numbers and operations");
-            }
+        {
+            throw new ArgumentException(nameof(expression), "Can't contains anything except numbers and operations");
+        }
 
         double firstNumber;
         double secondNumber;
 
         try
-            {
-                secondNumber = this.stack.Pop();
-                firstNumber = this.stack.Pop();
-            }
+        {
+            secondNumber = this.stack.Pop();
+            firstNumber = this.stack.Pop();
+        }
         catch (InvalidOperationException)
-            {
-                throw new ArgumentException("Expression is invalid", nameof(expression));
-            }
+        {
+            throw new ArgumentException("Expression is invalid", nameof(expression));
+        }
 
         var (operationResult, success) = this.TryCalculateOperation(firstNumber, secondNumber, operation);
 
