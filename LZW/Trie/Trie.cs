@@ -10,7 +10,7 @@ public class Trie
     /// <summary>
     /// Gets number of words in trie.
     /// </summary>
-    public int Size { get; private set; }
+    public int Size => root.PrefixCount;
 
     /// <summary>
     /// Add byte list to trie.
@@ -19,19 +19,16 @@ public class Trie
     /// <param name="value">Number of element.</param>
     /// <returns>True if word wasn't in list else false.</returns>
     /// <exception cref="ArgumentNullException">Can't be null.</exception>
-    public bool Add(List<byte>? element, int value)
+    public bool Add(List<byte> element, int value)
     {
-        if (element == null)
-        {
-            throw new ArgumentNullException(nameof(element));
-        }
+        ArgumentNullException.ThrowIfNull(element);
 
-        if (this.Contains(element))
+        if (Contains(element))
         {
             return false;
         }
 
-        TrieVertex current = this.root;
+        TrieVertex current = root;
         ++current.PrefixCount;
 
         foreach (var symbol in element)
@@ -45,7 +42,6 @@ public class Trie
             ++current.PrefixCount;
         }
 
-        ++this.Size;
         current.IsTerminal = true;
 
         return true;
@@ -57,14 +53,11 @@ public class Trie
     /// <param name="element">Word that we check.</param>
     /// <returns>True if word in trie else false.</returns>
     /// <exception cref="ArgumentNullException">Word can't be null.</exception>
-    public bool Contains(List<byte>? element)
+    public bool Contains(List<byte> element)
     {
-        if (element == null)
-        {
-            throw new ArgumentNullException(nameof(element));
-        }
+        ArgumentNullException.ThrowIfNull(element);
 
-        TrieVertex current = this.root;
+        TrieVertex current = root;
 
         foreach (var symbol in element)
         {
@@ -85,21 +78,16 @@ public class Trie
     /// <param name="element">Word that we should delete.</param>
     /// <returns>True if word was in trie else false.</returns>
     /// <exception cref="ArgumentNullException">Word can't be null.</exception>
-    public bool Remove(List<byte>? element)
+    public bool Remove(List<byte> element)
     {
-        if (element == null)
-        {
-            throw new ArgumentNullException(nameof(element));
-        }
+        ArgumentNullException.ThrowIfNull(element);
 
-        if (!this.Contains(element))
+        if (!Contains(element))
         {
             return false;
         }
 
-        --this.Size;
-
-        TrieVertex current = this.root;
+        TrieVertex current = root;
         --current.PrefixCount;
 
         foreach (var symbol in element)
@@ -119,47 +107,16 @@ public class Trie
     }
 
     /// <summary>
-    /// Function of checking how many words in trie starts with some prefix.
-    /// </summary>
-    /// <param name="prefix">Prefix that we check.</param>
-    /// <returns>Number of words in trie that starts with this prefix.</returns>
-    /// <exception cref="ArgumentNullException">Prefix can't be null.</exception>
-    public int HowManyStartsWithPrefix(List<byte>? prefix)
-    {
-        if (prefix == null)
-        {
-            throw new ArgumentNullException(nameof(prefix));
-        }
-
-        TrieVertex current = this.root;
-
-        foreach (var symbol in prefix)
-        {
-            if (!current.Childrens.ContainsKey(symbol))
-            {
-                return 0;
-            }
-
-            current = current.Childrens[symbol];
-        }
-
-        return current.PrefixCount;
-    }
-
-    /// <summary>
     /// Get value of list of bytes.
     /// </summary>
     /// <param name="word">List of bytes.</param>
     /// <returns>Value of word.</returns>
     /// <exception cref="ArgumentNullException">word can't be null.</exception>
-    public int GetValue(List<byte>? word)
+    public int GetValue(List<byte> word)
     {
-        if (word == null)
-        {
-            throw new ArgumentNullException(nameof(word));
-        }
+        ArgumentNullException.ThrowIfNull(word);
 
-        TrieVertex current = this.root;
+        TrieVertex current = root;
 
         foreach (var symbol in word)
         {
@@ -182,7 +139,7 @@ public class Trie
         /// <param name="value">Vertex value</param>
         public TrieVertex(int value)
         {
-            this.Value = value;
+            Value = value;
         }
 
         /// <summary>

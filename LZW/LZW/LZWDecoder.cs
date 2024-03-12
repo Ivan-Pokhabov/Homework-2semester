@@ -1,15 +1,11 @@
-using System.Data.SqlTypes;
-using Trie;
+using Containers;
 
 namespace LZW;
 
-static class LZWDecoder
+public static class LZWDecoder
 {
-    public static void Decode()
+    public static byte[] Decode(byte[] code)
     {
-        var code = File.ReadAllText("test.txt");
-        var codes = code.Split(" ");
-
         var dictionary = new Dictionary<int, List<byte>> ();
 
         for (var i = 0; i < 256; ++i)
@@ -18,24 +14,52 @@ static class LZWDecoder
         }
 
         var currentEncodeNumber = 256;
-        var encode = new List<byte> ();
+        var encode = new DecodeIntContainer ();
 
-        for (var i = 0; i < codes.Length - 1; ++i)
+        for (var i = 0; i < code.Length; ++i)
         {
-            encode.AddRange(dictionary[int.Parse(codes[i])]);
+            if (currentEncodeNumber == encode.MaxSymbols)
+            {
+                ++encode.SymbolBitSize;
+                encode.MaxSymbols <<= 1;
+            }
+            
+            if (encode.Add(code[i]))
+            {
+                ++currentEncodeNumber;
+            }
+        }
+
+        encode.AddLastInt();
+
+        var encodeInts = encode.GetIntArray();
+
+        var decodeBytes = new List<byte> ();
+        currentEncodeNumber = 256;
+
+        for (var i = 0; i < encodeInts.Length - 1; ++i)
+        {
+            decodeBytes.AddRange(dictionary[encodeInts[i]]);
 
             var newCodeSequence = new List<byte> ();
-            newCodeSequence.AddRange(dictionary[int.Parse(codes[i])]);
+            newCodeSequence.AddRange(dictionary[encodeInts[i]]);
 
-            newCodeSequence.Add(dictionary[int.Parse(codes[i + 1])][0]);
+            if (!dictionary.ContainsKey(encodeInts[i + 1]))
+            {
+                newCodeSequence.Add(newCodeSequence[0]);
 
-            dictionary.Add(currentEncodeNumber, newCodeSequence);
+                dictionary.Add(currentEncodeNumber, newCodeSequence);
+            }
+            else
+            {
+                newCodeSequence.Add(dictionary[encodeInts[i + 1]][0]);
+
+                dictionary.Add(currentEncodeNumber, newCodeSequence);
+            }
             
             ++currentEncodeNumber;
         }
 
-        encode.AddRange(dictionary[int.Parse(codes[codes.Length - 1])]);
-
-        File.WriteAllBytes("testoutput.txt", encode.ToArray());
+        return decodeBytes.ToArray();
     }
 }
