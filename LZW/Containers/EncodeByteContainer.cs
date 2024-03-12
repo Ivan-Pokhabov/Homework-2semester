@@ -1,12 +1,21 @@
 ﻿namespace Containers;
 
+/// <summary>
+/// Class of container ints in byte representation.
+/// </summary>
 public class EncodeByteContainer
 {
-    public int SymbolBitSize { set; get; } = 8;
+    /// <summary>
+    /// Gets or sets symbol bit size.
+    /// </summary>
+    public int SymbolBitSize { get; set; } = 8;
 
-    public int MaxSymbols  { set; get; } = 256;
+    /// <summary>
+    /// Gets or sets max number of different symbol.
+    /// </summary>
+    public int MaxSymbols { get; set; } = 256;
 
-    private List<byte> container = new ();
+    private readonly List<byte> container = new ();
 
     private byte currentByte = 0;
 
@@ -14,6 +23,10 @@ public class EncodeByteContainer
 
     private int currentByteSize = 0;
 
+    /// <summary>
+    /// Add int number in byte container.
+    /// </summary>
+    /// <param name="number">Int number.</param>
     public void Add(int number)
     {
         var representation = IntToByteRepresentation(number);
@@ -23,7 +36,7 @@ public class EncodeByteContainer
             currentByte = (byte)((currentByte << 1) + bit);
 
             ++currentByteSize;
-            
+
             if (currentByteSize == BITS_IN_BYTE)
             {
                 AddByteToContainer();
@@ -31,16 +44,19 @@ public class EncodeByteContainer
         }
     }
 
+    /// <summary>
+    /// Transform container into byte array.
+    /// </summary>
+    /// <returns>Byte array.</returns>
     public byte[] GetByteArray()
     {
         PrepareContainerToTransformToArray();
         return container.ToArray();
     }
-        
 
     private void PrepareContainerToTransformToArray()
     {
-        currentByte <<=  BITS_IN_BYTE - currentByteSize;
+        currentByte <<= BITS_IN_BYTE - currentByteSize;
 
         AddByteToContainer();
     }

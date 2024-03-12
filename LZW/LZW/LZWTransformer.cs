@@ -1,7 +1,16 @@
 namespace LZW;
 
+/// <summary>
+/// Class that encode or decode file by LZW.
+/// </summary>
 public static class LZWTransformer
 {
+    /// <summary>
+    /// Function of encoding file.
+    /// </summary>
+    /// <param name="filePath">Relative path to file.</param>
+    /// <returns>Compress ratio.</returns>
+    /// <exception cref="ArgumentException">File should exists and can't be null or empty.</exception>
     public static double Encode(string filePath)
     {
         if (!File.Exists(filePath))
@@ -22,12 +31,19 @@ public static class LZWTransformer
         return (double)firstFileByteSize / (double)secondFileByteSize;
     }
 
+    /// <summary>
+    /// Function of decoding file.
+    /// </summary>
+    /// <param name="filePath">Relative path to decoding dile.</param>
+    /// <exception cref="ArgumentException">Decoding file should be correct.</exception>
     public static void Decode(string filePath)
     {
         if (!File.Exists(filePath))
         {
             throw new ArgumentException("No file with this path exists", nameof(filePath));
         }
+
+        ArgumentException.ThrowIfNullOrEmpty(nameof(filePath));
 
         var newFilePath = filePath.Substring(0, filePath.LastIndexOf('.'));
         if (newFilePath == string.Empty)
@@ -39,14 +55,7 @@ public static class LZWTransformer
 
         var code = File.ReadAllBytes(filePath);
 
-        try
-        {
-           code = LZWDecoder.Decode(code);
-        }
-        catch (ArgumentException)
-        {
-            throw new ArgumentException("Trying to decompress empty file", nameof(filePath));
-        }
+        code = LZWDecoder.Decode(code);
 
         File.WriteAllBytes(newFilePath, code);
     }

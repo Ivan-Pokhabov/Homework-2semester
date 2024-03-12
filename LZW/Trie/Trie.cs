@@ -134,18 +134,18 @@ public class Trie
     private class TrieVertex
     {
         /// <summary>
-        /// Innitialize new instance of TrieVertex.
+        /// Initializes a new instance of the <see cref="TrieVertex"/> class.
         /// </summary>
-        /// <param name="value">Vertex value</param>
+        /// <param name="value">Vertex value.</param>
         public TrieVertex(int value)
         {
             Value = value;
         }
 
         /// <summary>
-        /// Value of vertex.
+        /// Gets or sets value of vertex.
         /// </summary>
-        public int Value {get; set; }
+        public int Value { get; set; }
 
         /// <summary>
         /// Gets or sets a value indicating whether true if path to this vertex is a word in Trie else false.
@@ -158,8 +158,8 @@ public class Trie
         public int PrefixCount { get; set; }
 
         /// <summary>
-        /// Container of edges to childrens.
+        /// Gets childrens of vetrex.
         /// </summary>
-        public readonly Dictionary<byte, TrieVertex> Childrens = new ();
+        public Dictionary<byte, TrieVertex> Childrens { get; private set; } = new ();
     }
 }
