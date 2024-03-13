@@ -11,6 +11,8 @@ Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Containers", "Containers\Co
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "BWT", "BWT\BWT.csproj", "{1E797B17-AC94-4D0E-B1CE-CB0D961BCC1F}"
 EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "LZW.Tests", "LZW.Tests\LZW.Tests.csproj", "{0E5A25F0-D72F-4F87-99AC-F5C10A14DE2A}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -33,6 +35,10 @@ Global
 		{1E797B17-AC94-4D0E-B1CE-CB0D961BCC1F}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{1E797B17-AC94-4D0E-B1CE-CB0D961BCC1F}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{1E797B17-AC94-4D0E-B1CE-CB0D961BCC1F}.Release|Any CPU.Build.0 = Release|Any CPU
+		{0E5A25F0-D72F-4F87-99AC-F5C10A14DE2A}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{0E5A25F0-D72F-4F87-99AC-F5C10A14DE2A}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{0E5A25F0-D72F-4F87-99AC-F5C10A14DE2A}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{0E5A25F0-D72F-4F87-99AC-F5C10A14DE2A}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE

@@ -14,7 +14,7 @@ public static class LZWTransformer
     /// <param name="withBWT">Should we use bwt or not.</param>
     /// <returns>Compress ratio.</returns>
     /// <exception cref="ArgumentException">File should exists and can't be null or empty.</exception>
-    public static double Encode(string filePath, bool withBWT = true)
+    public static double Encode(string filePath, bool withBWT = false)
     {
         if (!File.Exists(filePath))
         {

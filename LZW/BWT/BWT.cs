@@ -66,7 +66,6 @@ public static class BWTTransformer
         var currentSymbolIndex = shifts[originalArrayIndex - 1];
         for (var i = 0; i < BWTArray.Length; ++i)
         {
-            Console.WriteLine(currentSymbolIndex);
             originalString.Add(BWTArray[currentSymbolIndex]);
             currentSymbolIndex = shifts[currentSymbolIndex];
         }
