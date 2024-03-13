@@ -1,6 +1,6 @@
 ﻿using LZW;
 
-if (args.Length != 2)
+if (args.Length != 3)
 {
     Console.WriteLine("Incorrect input, please try again");
     return;
@@ -18,7 +18,7 @@ if (args[1] == "--c")
 
     try
     {
-        result = LZWTransformer.Encode(args[0]);
+        result = LZWTransformer.Encode(args[0], args[2] == "--bwt");
     }
     catch
     {
@@ -32,7 +32,7 @@ else if (args[1] == "--u")
 {
     try
     {
-        LZWTransformer.Decode(args[0]);
+        LZWTransformer.Decode(args[0], args[2] == "--bwt");
     }
     catch
     {
