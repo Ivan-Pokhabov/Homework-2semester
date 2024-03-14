@@ -22,7 +22,7 @@ if (args[1] == "--c")
     {
         result = LZWTransformer.Encode(args[0], withBWT);
     }
-    catch
+    catch (ArgumentException)
     {
         Console.WriteLine("Encoding failed");
         return;
@@ -36,7 +36,7 @@ else if (args[1] == "--u")
     {
         LZWTransformer.Decode(args[0], withBWT);
     }
-    catch
+    catch (ArgumentException)
     {
         Console.WriteLine("Decoding failed");
         return;
