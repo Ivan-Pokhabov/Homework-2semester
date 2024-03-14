@@ -39,13 +39,8 @@ public class TrieTests
         {
             trie.Add(word);
 
-            if (!trie.Contains(word))
-            {
-                Assert.Fail();
-            }
+            Assert.That(trie.Contains(word));
         }
-
-        Assert.Pass();
     }
 
     [TestCaseSource(nameof(TestCasesWithDifferentWords))]
@@ -55,10 +50,7 @@ public class TrieTests
 
         foreach (var word in words)
         {
-            if (trie.Size != expectedSize)
-            {
-                Assert.Fail();
-            }
+            Assert.That(trie.Size == expectedSize);
 
             trie.Add(word);
             trie.Add(word);
@@ -67,10 +59,7 @@ public class TrieTests
 
         foreach (var word in words)
         {
-            if (trie.Size != expectedSize)
-            {
-                Assert.Fail();
-            }
+            Assert.That(trie.Size == expectedSize);
 
             trie.Remove(word);
             trie.Remove(word);
@@ -92,13 +81,8 @@ public class TrieTests
         {
             trie.Remove(word);
 
-            if (trie.Contains(word))
-            {
-                Assert.Fail();
-            }
+            Assert.That(!trie.Contains(word));
         }
-
-        Assert.Pass();
     }
 
     [TestCaseSource(nameof(TestCasesWithDifferentWords))]
@@ -106,18 +90,12 @@ public class TrieTests
     {
         foreach (var word in words)
         {
-            if (trie.Remove(word) || !trie.Add(word))
-            {
-                Assert.Fail();
-            }
+            Assert.That(!trie.Remove(word) && trie.Add(word));
         }
 
         foreach (var word in words)
         {
-            if (trie.Add(word) || !trie.Remove(word))
-            {
-                Assert.Fail();
-            }
+            Assert.That(!trie.Add(word) && trie.Remove(word));
         }
 
         Assert.Pass();
