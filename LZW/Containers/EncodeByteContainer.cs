@@ -5,6 +5,14 @@
 /// </summary>
 public class EncodeByteContainer
 {
+    private const int BitsInByte = 8;
+
+    private readonly List<byte> container = new ();
+
+    private byte currentByte = 0;
+
+    private int currentByteSize = 0;
+
     /// <summary>
     /// Gets or sets symbol bit size.
     /// </summary>
@@ -14,14 +22,6 @@ public class EncodeByteContainer
     /// Gets or sets max number of different symbol.
     /// </summary>
     public int MaxSymbols { get; set; } = 256;
-
-    private readonly List<byte> container = new ();
-
-    private byte currentByte = 0;
-
-    private const int BITS_IN_BYTE = 8;
-
-    private int currentByteSize = 0;
 
     /// <summary>
     /// Add int number in byte container.
@@ -37,7 +37,7 @@ public class EncodeByteContainer
 
             ++currentByteSize;
 
-            if (currentByteSize == BITS_IN_BYTE)
+            if (currentByteSize == BitsInByte)
             {
                 AddByteToContainer();
             }
@@ -56,7 +56,7 @@ public class EncodeByteContainer
 
     private void PrepareContainerToTransformToArray()
     {
-        currentByte <<= BITS_IN_BYTE - currentByteSize;
+        currentByte <<= BitsInByte - currentByteSize;
 
         AddByteToContainer();
     }

@@ -5,6 +5,14 @@ namespace Containers;
 /// </summary>
 public class DecodeIntContainer
 {
+    private const int BitsInByte = 8;
+
+    private readonly List<int> container = new ();
+
+    private int currentInt = 0;
+
+    private int currentIntSize = 0;
+
     /// <summary>
     /// Gets or sets current int size in bytes.
     /// </summary>
@@ -14,14 +22,6 @@ public class DecodeIntContainer
     /// Gets or sets max size of int size.
     /// </summary>
     public int MaxInt { get; set; } = 256;
-
-    private readonly List<int> container = new ();
-
-    private int currentInt = 0;
-
-    private const int BITS_IN_BYTE = 8;
-
-    private int currentIntSize = 0;
 
     /// <summary>
     /// Add byte of int.
@@ -75,9 +75,9 @@ public class DecodeIntContainer
 
     private byte[] ByteToBitRepresentation(byte convertByte)
     {
-        var representation = new byte[BITS_IN_BYTE];
+        var representation = new byte[BitsInByte];
 
-        for (var i = BITS_IN_BYTE - 1; i >= 0; --i)
+        for (var i = BitsInByte - 1; i >= 0; --i)
         {
             representation[i] = (byte)(convertByte % 2);
             convertByte >>= 1;
