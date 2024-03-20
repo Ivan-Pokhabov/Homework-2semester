@@ -1,5 +1,6 @@
 namespace MyUniqueList;
 
+using System.Reflection.Metadata.Ecma335;
 using Exceptions;
 
 /// <summary>
@@ -16,7 +17,12 @@ public class UniqueList<T> : List<T>
     /// <exception cref="InvalidOperationException">You can't use this function on empty list.</exception>
     public bool Contains(T value)
     {
-        Node currentNode = head ?? throw new InvalidOperationException("You can't check element in empty uniqueList");
+        if (head is null)
+        {
+            return false;
+        }
+
+        Node currentNode = head;
 
         for (var i = 0; i < Size - 1; ++i)
         {
@@ -55,7 +61,7 @@ public class UniqueList<T> : List<T>
     /// <exception cref="InvalidInsertOperationException">You can't insert value taht alreade in unique list.</exception>
     public override void Insert(int index, T value)
     {
-        if (Size != 0 && Contains(value))
+        if (Contains(value))
         {
             throw new InvalidInsertOperationException("You can't insert element that already contains in unique list");
         }

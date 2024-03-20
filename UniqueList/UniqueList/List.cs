@@ -11,12 +11,12 @@ public class List<T>
     /// <summary>
     /// Head of list.
     /// </summary>
-    private protected Node? head = null;
+    private protected Node? head;
 
     /// <summary>
     /// Gets size of list.
     /// </summary>
-    public int Size { get; private set; } = 0;
+    public int Size { get; private set; }
 
     /// <summary>
     /// Get element of list by index.
@@ -37,7 +37,7 @@ public class List<T>
     /// <exception cref="IndexOutOfRangeException"><Index should be in range from 0 to size of list.</exception>
     public virtual void Insert(int index, T value)
     {
-        if (index < 0 || index > Size)
+        if (!(IsValidIndex(index) || index == Size))
         {
             throw new IndexOutOfRangeException(nameof(index));
         }
