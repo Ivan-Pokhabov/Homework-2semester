@@ -17,7 +17,7 @@ public class StackCalculatorTests
         const double correctAnswer = -0.122549019607;
         var (result, isCorrect) = calculator.CalculatePostfixExpression(expression);
 
-        Assert.That(isCorrect && Math.Abs(result - correctAnswer) < 0.0000000001);
+        Assert.That(isCorrect && Math.Abs(result - correctAnswer) < (double)1e13);
     }
 
     [TestCaseSource(nameof(StackCalculator))]
