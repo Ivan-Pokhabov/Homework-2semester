@@ -42,7 +42,7 @@ public class ParseTree()
             throw new ArgumentException("Exception is incorrect", nameof(expression));
         }
 
-        if (index != expression.Length)
+        if (index != expressionElements.Length)
         {
             throw new ArgumentException("Exception is incorrect", nameof(expression));
         }
