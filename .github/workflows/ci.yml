@@ -14,7 +14,7 @@ jobs:
               run: for f in $(find . -name "*.sln"); do dotnet test $f; done
     build-Windows:
         runs-on: windows-latest
-        default:
+        defaults:
           run:
             shell: cmd
         steps:
