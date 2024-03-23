@@ -79,7 +79,7 @@ public class ParseTree()
     /// <returns>Double result.</returns>
     /// <exception cref="InvalidOperationException">Tree should be built.</exception>
     /// <exception cref="ArgumentException">Expression should be correct.</exception>
-    public double CalclulateExpression()
+    public double CalculateTree()
     {
         if (root is null)
         {

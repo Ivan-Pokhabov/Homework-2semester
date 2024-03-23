@@ -35,7 +35,7 @@ catch (Exception e) when (e is ArgumentException || e is ArgumentNullException)
 double result;
 try
 {
-    result = parseTree.CalclulateExpression();
+    result = parseTree.CalculateTree();
 }
 catch (Exception e) when (e is ArgumentException || e is InvalidOperationException)
 {
