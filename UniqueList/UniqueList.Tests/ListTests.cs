@@ -5,7 +5,7 @@ using Exceptions;
 
 public class ListTests
 {
-    private static bool AreEqual(List<int> list, int[] array)
+    public static bool AreEqual(List<int> list, int[] array)
     {
         if (list.Size != array.Length)
         {
@@ -23,7 +23,7 @@ public class ListTests
         return true;
     }
 
-    private static IEnumerable<TestCaseData> Lists
+    public static IEnumerable<TestCaseData> Lists
     {
         get
         {
@@ -51,7 +51,7 @@ public class ListTests
         }
     }
 
-    private static IEnumerable<TestCaseData> UniqueListData
+    public static IEnumerable<TestCaseData> UniqueListData
     {
         get
         {
@@ -68,7 +68,6 @@ public class ListTests
             yield return new TestCaseData(uniqueList);
         }
     }
-
 
     [TestCaseSource(nameof(Lists))]
     public void AddAndIndexerAndSize_WithCorrectInput_ShouldPerformExpectedResult(List<int> list)

@@ -1,9 +1,5 @@
 namespace Exceptions;
 
-public class InvalidChangeOperationException : SystemException
+public class InvalidChangeOperationException(string? message) : SystemException(message)
 {
-    public InvalidChangeOperationException(string? message) : base(message)
-    {
-        
-    }
 }

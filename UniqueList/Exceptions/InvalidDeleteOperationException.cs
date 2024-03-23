@@ -1,9 +1,5 @@
 ﻿namespace Exceptions;
 
-public class InvalidDeleteOperationException : SystemException
+public class InvalidDeleteOperationException(string? message) : SystemException(message)
 {
-    public InvalidDeleteOperationException(string? message) : base(message)
-    {
-        
-    }
 }

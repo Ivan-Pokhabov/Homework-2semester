@@ -1,9 +1,5 @@
 namespace Exceptions;
 
-public class InvalidInsertOperationException : SystemException
+public class InvalidInsertOperationException(string? message) : SystemException(message)
 {
-    public InvalidInsertOperationException(string? message) : base(message)
-    {
-        
-    }
 }
