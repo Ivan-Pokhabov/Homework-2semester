@@ -7,6 +7,6 @@ public class OperandNode(double number) : IParseTreeNode
 
     public void Print()
     {
-        Console.Write(Number);
+        Console.Write($"{Number} ");
     }
 }

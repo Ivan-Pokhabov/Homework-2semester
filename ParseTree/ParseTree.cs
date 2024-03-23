@@ -69,7 +69,7 @@ public class ParseTree()
         {
             return root.CalclulateSubtree();
         }
-        catch (InvalidOperationException)
+        catch (DivideByZeroException)
         {
             throw new ArgumentException("Expression contains division by zero");
         }

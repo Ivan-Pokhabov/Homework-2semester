@@ -29,9 +29,10 @@ public class OperationNode(char operation) : IParseTreeNode
 
     public void Print()
     {
-        Console.Write(Operation);
+        Console.Write($"( {Operation} ");
         LeftChild?.Print();
         RightChild?.Print();
+        Console.Write(") ");
     }
 
     static private double CalclulateExpression(char Operation, double leftPart, double rightPart) =>
@@ -40,7 +41,7 @@ public class OperationNode(char operation) : IParseTreeNode
             '+' => leftPart + rightPart,
             '-' => leftPart - rightPart,
             '*' => leftPart * rightPart,
-            '/' => (rightPart == 0) ? throw new InvalidOperationException("Division by zero") : leftPart / rightPart,
+            '/' => (rightPart == 0) ? throw new DivideByZeroException() : leftPart / rightPart,
             _ => throw new ArgumentException("Operation is incorrect ", nameof(Operation))
         };
 }
