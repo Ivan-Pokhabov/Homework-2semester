@@ -1,4 +1,7 @@
-﻿if (args.Length != 1)
+﻿// Copyright (c) Ivan-Pokhabov. All Rights Reserved.
+// Licensed under the MIT License. See LICENSE in the project root for license information.
+
+if (args.Length != 1)
 {
     Console.Write("Argument error. Use \"dotnet run help\".");
     return;

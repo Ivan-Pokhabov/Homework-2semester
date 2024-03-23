@@ -1,9 +1,20 @@
+// Copyright (c) Ivan-Pokhabov. All Rights Reserved.
+// Licensed under the MIT License. See LICENSE in the project root for license information.
+
 namespace ParseTree;
 
+/// <summary>
+/// Class of parse tree.
+/// </summary>
 public class ParseTree()
 {
     private IParseTreeNode? root;
 
+    /// <summary>
+    /// Build tree by expression.
+    /// </summary>
+    /// <param name="expression">String.</param>
+    /// <exception cref="ArgumentException">Expression should be not null, not empty and correct.</exception>
     public void BuildTree(string expression)
     {
         ArgumentException.ThrowIfNullOrEmpty(expression);
@@ -48,6 +59,10 @@ public class ParseTree()
         }
     }
 
+    /// <summary>
+    /// Print parse tree into console.
+    /// </summary>
+    /// <exception cref="InvalidOperationException">Tree should be built.</exception>
     public void Print()
     {
         if (root is null)
@@ -58,6 +73,12 @@ public class ParseTree()
         root.Print();
     }
 
+    /// <summary>
+    /// Calculate tree.
+    /// </summary>
+    /// <returns>Double result.</returns>
+    /// <exception cref="InvalidOperationException">Tree should be built.</exception>
+    /// <exception cref="ArgumentException">Expression should be correct.</exception>
     public double CalclulateExpression()
     {
         if (root is null)
