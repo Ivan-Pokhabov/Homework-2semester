@@ -9,7 +9,7 @@ if (args.Length != 1)
 
 if (args[0] == "help")
 {
-    Console.WriteLine("dotnet run FilePath will calculate infix expression");
+    Console.WriteLine("<dotnet run --project=projectPath FilePath> will calculate infix expression");
     return;
 }
 
@@ -26,7 +26,7 @@ try
 {
     parseTree.BuildTree(expression);
 }
-catch (Exception e) when (e is ArgumentException || e is ArgumentNullException)
+catch (ArgumentException e)
 {
     Console.Write(e.Message);
     return;
@@ -43,13 +43,4 @@ catch (Exception e) when (e is ArgumentException || e is InvalidOperationExcepti
     return;
 }
 
-try
-{
-    parseTree.Print();
-    Console.Write($"= {result}\n");
-}
-catch (InvalidOperationException e)
-{
-    Console.Write(e.Message);
-    return;
-}
+Console.Write($"{parseTree.Print()}= {result}\n");

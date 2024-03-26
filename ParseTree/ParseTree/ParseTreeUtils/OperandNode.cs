@@ -10,16 +10,13 @@ namespace ParseTree;
 public class OperandNode(double number) : IParseTreeNode
 {
     /// <summary>
-    /// Sets value of operand.
+    /// Gets or sets value of operand.
     /// </summary>
-    public double Number { private get; set; } = number;
+    public double Number { get; set; } = number;
 
     /// <inheritdoc/>
-    public double CalclulateSubtree() => Number;
+    public double CalculateSubtree() => Number;
 
     /// <inheritdoc/>
-    public void Print()
-    {
-        Console.Write($"{Number} ");
-    }
+    public string PrintSubtree() => $"{Number}";
 }

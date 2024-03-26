@@ -12,10 +12,11 @@ public interface IParseTreeNode
     /// Calculate expression in subtree.
     /// </summary>
     /// <returns>Double result.</returns>
-    double CalclulateSubtree();
+    double CalculateSubtree();
 
     /// <summary>
     /// Print subtree into console.
     /// </summary>
-    void Print();
+    /// <returns>String representation of subtree.</returns>
+    string PrintSubtree();
 }

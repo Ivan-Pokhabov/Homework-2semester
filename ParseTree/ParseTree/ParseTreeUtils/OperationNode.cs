@@ -10,9 +10,9 @@ namespace ParseTree;
 public class OperationNode(char operation) : IParseTreeNode
 {
     /// <summary>
-    /// Sets type of operation.
+    /// Gets or sets type of operation.
     /// </summary>
-    public char Operation { private get; set; } = operation;
+    public char Operation { get; set; } = operation;
 
     /// <summary>
     /// Gets or sets left child of node.
@@ -25,13 +25,13 @@ public class OperationNode(char operation) : IParseTreeNode
     public IParseTreeNode? RightChild { get; set; }
 
     /// <inheritdoc/>
-    public double CalclulateSubtree()
+    public double CalculateSubtree()
     {
         ArgumentNullException.ThrowIfNull(LeftChild);
         ArgumentNullException.ThrowIfNull(RightChild);
 
-        var leftPart = LeftChild.CalclulateSubtree();
-        var rightPart = RightChild.CalclulateSubtree();
+        var leftPart = LeftChild.CalculateSubtree();
+        var rightPart = RightChild.CalculateSubtree();
         try
         {
             return CalclulateExpression(Operation, leftPart, rightPart);
@@ -42,18 +42,12 @@ public class OperationNode(char operation) : IParseTreeNode
         }
         catch (InvalidOperationException)
         {
-            throw new InvalidOperationException("Tree contains division by zero");
+            throw new DivideByZeroException("Tree contains division by zero");
         }
     }
 
     /// <inheritdoc/>
-    public void Print()
-    {
-        Console.Write($"( {Operation} ");
-        LeftChild?.Print();
-        RightChild?.Print();
-        Console.Write(") ");
-    }
+    public string PrintSubtree() => $"({Operation} {LeftChild?.PrintSubtree()} {RightChild?.PrintSubtree()})";
 
     private static double CalclulateExpression(char operation, double leftPart, double rightPart) =>
         operation switch

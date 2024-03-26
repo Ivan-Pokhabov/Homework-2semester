@@ -26,7 +26,57 @@ public class ParseTree()
         var index = 0;
         root = Build(expressionElements, ref index);
 
-        IParseTreeNode? Build(string[] expression, ref int index)
+        if (index != expressionElements.Length)
+        {
+            throw new ArgumentException("Exception is incorrect", nameof(expression));
+        }
+    }
+
+    /// <summary>
+    /// Print parse tree into console.
+    /// </summary>
+    /// <exception cref="InvalidOperationException">Tree should be built.</exception>
+    /// <returns>String of expression.</returns>
+    public string Print()
+    {
+        if (root is null)
+        {
+            throw new InvalidOperationException("Tree is empty");
+        }
+
+        return root.PrintSubtree();
+    }
+
+    /// <summary>
+    /// Calculate tree.
+    /// </summary>
+    /// <returns>Double result.</returns>
+    /// <exception cref="InvalidOperationException">Tree should be built.</exception>
+    /// <exception cref="ArgumentException">Expression should be correct.</exception>
+    public double CalculateTree()
+    {
+        if (root is null)
+        {
+            throw new InvalidOperationException("Tree is empty");
+        }
+
+        try
+        {
+            return root.CalculateSubtree();
+        }
+        catch (DivideByZeroException)
+        {
+            throw new ArgumentException("Expression contains division by zero");
+        }
+        catch (ArgumentException)
+        {
+            throw new ArgumentException("Expression contains none declared operation");
+        }
+    }
+
+    private bool IsOperation(string symbol) => symbol == "+" || symbol == "/" || symbol == "-" || symbol == "*";
+
+    private IParseTreeNode? Build(string[] expression, ref int index)
         {
             if (index == expression.Length)
             {
@@ -52,53 +102,4 @@ public class ParseTree()
 
             throw new ArgumentException("Exception is incorrect", nameof(expression));
         }
-
-        if (index != expressionElements.Length)
-        {
-            throw new ArgumentException("Exception is incorrect", nameof(expression));
-        }
-    }
-
-    /// <summary>
-    /// Print parse tree into console.
-    /// </summary>
-    /// <exception cref="InvalidOperationException">Tree should be built.</exception>
-    public void Print()
-    {
-        if (root is null)
-        {
-            throw new InvalidOperationException("Tree is empty");
-        }
-
-        root.Print();
-    }
-
-    /// <summary>
-    /// Calculate tree.
-    /// </summary>
-    /// <returns>Double result.</returns>
-    /// <exception cref="InvalidOperationException">Tree should be built.</exception>
-    /// <exception cref="ArgumentException">Expression should be correct.</exception>
-    public double CalculateTree()
-    {
-        if (root is null)
-        {
-            throw new InvalidOperationException("Tree is empty");
-        }
-
-        try
-        {
-            return root.CalclulateSubtree();
-        }
-        catch (DivideByZeroException)
-        {
-            throw new ArgumentException("Expression contains division by zero");
-        }
-        catch (ArgumentException)
-        {
-            throw new ArgumentException("Expression contains none declared operation");
-        }
-    }
-
-    private bool IsOperation(string symbol) => symbol == "+" || symbol == "/" || symbol == "-" || symbol == "*";
 }

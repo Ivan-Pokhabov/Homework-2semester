@@ -20,6 +20,15 @@ public class ParseTreeTests
         return parseTree.CalculateTree();
     }
 
+    [TestCase("(* (+ 1 1) (* 5 (/ -10 8)))")]
+    [TestCase("(/ (+ (* 13 3) 1) (* 2 (/ (- 20 8) 6)))")]
+    [TestCase("(/ 0 -5)")]
+    public void BuildTreeAndPrint_WithCorrectExpression_ShouldReturnExpectedResult(string expression)
+    {
+        parseTree.BuildTree(expression);
+        Assert.That(expression, Is.EqualTo(parseTree.Print()));
+    }
+
     [Test]
     public void BuildTreeAndCalculateTree_WithDivisionByZero_ShouldThrowsArgumentException()
     {
