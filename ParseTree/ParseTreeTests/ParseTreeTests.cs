@@ -23,14 +23,14 @@ public class ParseTreeTests
     [TestCase("(* (+ 1 1) (* 5 (/ -10 8)))")]
     [TestCase("(/ (+ (* 13 3) 1) (* 2 (/ (- 20 8) 6)))")]
     [TestCase("(/ 0 -5)")]
-    public void BuildTreeAndGetExpressionToString_WithCorrectExpression_ShouldReturnExpectedResult(string expression)
+    public void GetExpressionToString_WithCorrectExpression_ShouldReturnExpectedResult(string expression)
     {
         parseTree.BuildTree(expression);
         Assert.That(expression, Is.EqualTo(parseTree.GetExpressionToString()));
     }
 
     [Test]
-    public void BuildTreeAndCalculateTree_WithDivisionByZero_ShouldThrowsArgumentException()
+    public void CalculateTree_WithDivisionByZero_ShouldThrowsArgumentException()
     {
         var expression = "( / 1 0 )";
 
