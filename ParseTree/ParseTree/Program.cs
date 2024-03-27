@@ -43,4 +43,4 @@ catch (Exception e) when (e is ArgumentException || e is InvalidOperationExcepti
     return;
 }
 
-Console.Write($"{parseTree.Print()}= {result}\n");
+Console.Write($"{parseTree.GetExpressionToString()}= {result}\n");

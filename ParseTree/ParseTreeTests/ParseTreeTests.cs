@@ -23,10 +23,10 @@ public class ParseTreeTests
     [TestCase("(* (+ 1 1) (* 5 (/ -10 8)))")]
     [TestCase("(/ (+ (* 13 3) 1) (* 2 (/ (- 20 8) 6)))")]
     [TestCase("(/ 0 -5)")]
-    public void BuildTreeAndPrint_WithCorrectExpression_ShouldReturnExpectedResult(string expression)
+    public void BuildTreeAndGetExpressionToString_WithCorrectExpression_ShouldReturnExpectedResult(string expression)
     {
         parseTree.BuildTree(expression);
-        Assert.That(expression, Is.EqualTo(parseTree.Print()));
+        Assert.That(expression, Is.EqualTo(parseTree.GetExpressionToString()));
     }
 
     [Test]
@@ -70,8 +70,8 @@ public class ParseTreeTests
     }
 
     [Test]
-    public void PrintTree_WithDidNotBuildTree_ShouldThrowsInvalidOperationException()
+    public void GetExpressionToString_WithDidNotBuildTree_ShouldThrowsInvalidOperationException()
     {
-        Assert.Throws<InvalidOperationException>(() => parseTree.Print());
+        Assert.Throws<InvalidOperationException>(() => parseTree.GetExpressionToString());
     }
 }

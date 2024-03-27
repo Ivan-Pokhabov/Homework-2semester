@@ -37,7 +37,7 @@ public class ParseTree()
     /// </summary>
     /// <exception cref="InvalidOperationException">Tree should be built.</exception>
     /// <returns>String of expression.</returns>
-    public string Print()
+    public string GetExpressionToString()
     {
         if (root is null)
         {
