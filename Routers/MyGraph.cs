@@ -2,20 +2,27 @@ namespace Routers;
 
 public class MyGraph : IGraph
 {
-    private readonly List<List<(int, int)>>? graph;
+    public MyGraph(int size)
+    {
+        graph = [];
 
-    private int size = 0;
+        for (var i = 0; i < size; ++i)
+        {
+            graph.Add([]);
+        }
 
-    public int Size => size;
+        Size = size;
+    }
+    private readonly List<List<(int, int)>> graph;
+
+    public int Size { get; }
 
     public void AddEdge(int a, int b, int length)
     {
         graph[a].Add((b, length));
-        ++size;
+        graph[b].Add((a, length));
     }
 
     public (int, int)[] GetNeighbours(int a)
-    {
-        return [.. graph[a]];
-    }
+        => [.. graph[a]];
 }

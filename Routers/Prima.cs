@@ -1,3 +1,5 @@
+using System.Dynamic;
+
 namespace Routers;
 
 public static class MinSpanningTreeMaker
@@ -5,18 +7,16 @@ public static class MinSpanningTreeMaker
     public static IGraph MakeAlgorithmPrima(IGraph graph)
     {
         var visited = new bool[graph.Size];
+        var bestEdge= new int[graph.Size];
 
         var minEdge = new int[graph.Size];
-        for (var i = 0; i < graph.Size; ++i)
+        for (var i = 1; i < graph.Size; ++i)
         {
             minEdge[i] = (int)1e9;
         }
 
-        minEdge[0] = 0;
-
-        var bestEdge= new int[graph.Size];
+        var minSpanningTree = new MyGraph(graph.Size);
         
-
         for (var i = 0; i < graph.Size; ++i)
         {
             var currentVertex = -1;
@@ -27,8 +27,14 @@ public static class MinSpanningTreeMaker
                     currentVertex = vertex;
                 }
             }
-                
+
             visited[currentVertex] = true;
+
+            if (currentVertex != 0)
+            {
+                minSpanningTree.AddEdge(bestEdge[currentVertex], currentVertex, minEdge[currentVertex]);
+            }
+
 
             foreach (var (neighbour, length) in graph.GetNeighbours(currentVertex))
             {
@@ -38,13 +44,6 @@ public static class MinSpanningTreeMaker
                     bestEdge[neighbour] = currentVertex;
                 }
             }
-        }
-
-        var minSpanningTree = new MyGraph();
-
-        for (int i = 0; i < graph.Size; ++i)
-        {
-            minSpanningTree.AddEdge(i, bestEdge[i], minEdge[i]);
         }
 
         return minSpanningTree;
