@@ -12,7 +12,7 @@ public class GraphReader
     /// <returns>IGraph graph from file.</returns>
     /// <exception cref="FileNotFoundException">File should exist.</exception>
     public static IGraph ReadGraph(string filePath)
-        => (!File.Exists(filePath)) ? throw new FileNotFoundException(nameof(filePath)) : ParseTopology(filePath);
+        => (!File.Exists(filePath)) ? throw new FileNotFoundException($"File not found: {filePath}") : ParseTopology(filePath);
 
     private static IGraph ParseTopology(string filePath)
     {
