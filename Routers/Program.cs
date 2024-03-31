@@ -1,28 +1,48 @@
 ﻿using System.Text;
 using Routers;
 
-var graph = new MyGraph(3);
+if (args.Length != 2)
+{
+    Console.Error.WriteLine("Invalid number of arguments");
+    return -1;
+}
 
-graph.AddEdge(0, 1, -5);
-graph.AddEdge(0, 1, -10);
-graph.AddEdge(0, 2, -16);
-graph.AddEdge(1, 2, -20);
+IGraph graph;
+try
+{
+    graph = GraphReader.ReadGraph(args[0]);
+}
+catch (FileNotFoundException e)
+{
+    Console.Error.WriteLine(e.Message);
+    return -1;
+}
 
-var (isConnected, tree) = MinSpanningTreeMaker.MakeAlgorithmPrima(graph);
+var (isCorrect, maxSpanningTree) = MaxSpanningTreeMaker.MakeAlgorithmPrima(graph);
 
-for (var i = 0; i < 3; ++i)
+if (!isCorrect)
+{
+    Console.WriteLine("Graph wasn't connected");
+    return -2;
+}
+
+var output = new StringBuilder();
+for (var i = 0; i < maxSpanningTree.Size; ++i)
 {
     var stringOutput = new StringBuilder($"{i + 1} : ");
-    foreach (var (a, b) in tree.GetNeighbours(i))
+    foreach (var (neighbour, edgeWeight) in maxSpanningTree.GetNeighbours(i))
     {
-        if (a >= i)
+        if (neighbour >= i)
         {
-            stringOutput.Append($"{a + 1}({-b}) ");
+            stringOutput.Append($"{neighbour + 1} ({edgeWeight}) ");
         }
     }
 
     if (stringOutput.Length > $"{i + 1} : ".Length)
     {
-        Console.WriteLine(stringOutput);
+        output.AppendLine(stringOutput.ToString());
     }
 }
+
+File.WriteAllText(args[1], output.ToString());
+return 0;

@@ -3,7 +3,7 @@ namespace Routers;
 /// <summary>
 /// Class of making minimal spanning tree from graph.
 /// </summary>
-public static class MinSpanningTreeMaker
+public static class MaxSpanningTreeMaker
 {
     private static IGraph? graph;
 
@@ -11,7 +11,7 @@ public static class MinSpanningTreeMaker
 
     private static int[]? bestNeighbour;
 
-    private static int[]? minEdge;
+    private static int[]? maxEdge;
 
     private static int visitedCount = 0;
 
@@ -28,7 +28,7 @@ public static class MinSpanningTreeMaker
 
         for (var i = 0; i < graph!.Size; ++i)
         {
-            var currentVertex = FindVertexWithMinimalEnteringEdge();
+            var currentVertex = FindVertexWithMaxEnteringEdge();
 
             UpdateMinSpammingTree(currentVertex);
 
@@ -42,9 +42,9 @@ public static class MinSpanningTreeMaker
     {
         foreach (var (neighbour, length) in graph!.GetNeighbours(currentVertex))
         {
-            if (length < minEdge![neighbour])
+            if (length > maxEdge![neighbour])
             {
-                minEdge[neighbour] = length;
+                maxEdge[neighbour] = length;
                 bestNeighbour![neighbour] = currentVertex;
             }
         }
@@ -54,16 +54,16 @@ public static class MinSpanningTreeMaker
     {
         if (currentVertex != 0)
         {
-            minSpanningTree!.AddEdge(bestNeighbour![currentVertex], currentVertex, minEdge![currentVertex]);
+            minSpanningTree!.AddEdge(bestNeighbour![currentVertex], currentVertex, maxEdge![currentVertex]);
         }
     }
 
-    private static int FindVertexWithMinimalEnteringEdge()
+    private static int FindVertexWithMaxEnteringEdge()
     {
         var currentVertex = -1;
         for (var vertex = 0; vertex < graph!.Size; ++vertex)
         {
-            if (!visited![vertex] && (currentVertex == -1 || minEdge![vertex] < minEdge![currentVertex]))
+            if (!visited![vertex] && (currentVertex == -1 || maxEdge![vertex] > maxEdge![currentVertex]))
             {
                 currentVertex = vertex;
             }
@@ -79,8 +79,13 @@ public static class MinSpanningTreeMaker
     {
         visited = new bool[initialGraph.Size];
         bestNeighbour = new int[initialGraph.Size];
-        minEdge = new int[initialGraph.Size];
+        maxEdge = new int[initialGraph.Size];
         minSpanningTree = new MyGraph(initialGraph.Size);
+        for (var i = 1; i < initialGraph.Size; ++i)
+        {
+            maxEdge[i] = (int)-1e9;
+        }
+
         graph = initialGraph;
     }
 }

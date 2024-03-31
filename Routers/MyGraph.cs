@@ -40,7 +40,5 @@ public class MyGraph : IGraph
 
     /// <inheritdoc/>
     public (int, int)[] GetNeighbours(int vertex)
-    {
-        return (vertex < 0 || vertex >= Size) ? throw new ArgumentException("Vertex should be non-negative and less than size of graph") : [.. graph[vertex]];
-    }
+        => (vertex < 0 || vertex >= Size) ? throw new ArgumentException("Vertex should be non-negative and less than size of graph") : [.. graph[vertex]];
 }
