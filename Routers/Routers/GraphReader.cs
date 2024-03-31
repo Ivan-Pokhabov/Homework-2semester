@@ -12,7 +12,11 @@ public class GraphReader
     /// <returns>IGraph graph from file.</returns>
     /// <exception cref="FileNotFoundException">File should exist.</exception>
     public static IGraph ReadGraph(string filePath)
-        => (!File.Exists(filePath)) ? throw new FileNotFoundException($"File not found: {filePath}") : ParseTopology(filePath);
+    {
+        ArgumentException.ThrowIfNullOrEmpty(nameof(filePath));
+
+        return (!File.Exists(filePath)) ? throw new FileNotFoundException($"File not found: {filePath}") : ParseTopology(filePath);
+    }
 
     private static IGraph ParseTopology(string filePath)
     {
@@ -27,7 +31,7 @@ public class GraphReader
             var splittedLine = line.Split(":");
             if (splittedLine.Length != 2)
             {
-                throw new ArgumentException("Incorrect topology!");
+                throw new ArgumentException("Incorrect topology");
             }
 
             var fromVertex = splittedLine[0];
@@ -35,7 +39,7 @@ public class GraphReader
 
             if (!int.TryParse(fromVertex, out var firstVertex))
             {
-                throw new ArgumentException("Incorrect topology!");
+                throw new ArgumentException("Incorrect topology");
             }
 
             vertexes.Add(firstVertex);
