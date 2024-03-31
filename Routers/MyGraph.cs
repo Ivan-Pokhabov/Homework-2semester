@@ -1,7 +1,14 @@
 namespace Routers;
 
+/// <summary>
+/// Class of reliazation IGraph interface.
+/// </summary>
 public class MyGraph : IGraph
 {
+    /// <summary>
+    /// Initializes a new instance of the <see cref="MyGraph"/> class.
+    /// </summary>
+    /// <param name="size">int number of vertexes in graph.</param>
     public MyGraph(int size)
     {
         graph = [];
@@ -13,16 +20,27 @@ public class MyGraph : IGraph
 
         Size = size;
     }
+
     private readonly List<List<(int, int)>> graph;
 
+    /// <inheritdoc/>
     public int Size { get; }
 
-    public void AddEdge(int a, int b, int length)
+    /// <inheritdoc/>
+    public void AddEdge(int firstVertex, int secondVertex, int length)
     {
-        graph[a].Add((b, length));
-        graph[b].Add((a, length));
+        if (firstVertex < 0 || secondVertex < 0 || firstVertex >= Size || secondVertex >= Size)
+        {
+            throw new ArgumentException("Vertex should be non-negative and less than size of graph");
+        }
+
+        graph[firstVertex].Add((secondVertex, length));
+        graph[secondVertex].Add((firstVertex, length));
     }
 
-    public (int, int)[] GetNeighbours(int a)
-        => [.. graph[a]];
+    /// <inheritdoc/>
+    public (int, int)[] GetNeighbours(int vertex)
+    {
+        return (vertex < 0 || vertex >= Size) ? throw new ArgumentException("Vertex should be non-negative and less than size of graph") : [.. graph[vertex]];
+    }
 }

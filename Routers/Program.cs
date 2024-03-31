@@ -1,4 +1,5 @@
-﻿using Routers;
+﻿using System.Text;
+using Routers;
 
 var graph = new MyGraph(3);
 
@@ -7,20 +8,21 @@ graph.AddEdge(0, 1, -10);
 graph.AddEdge(0, 2, -16);
 graph.AddEdge(1, 2, -20);
 
-
-var tree = MinSpanningTreeMaker.MakeAlgorithmPrima(graph);
+var (isConnected, tree) = MinSpanningTreeMaker.MakeAlgorithmPrima(graph);
 
 for (var i = 0; i < 3; ++i)
 {
-    Console.Write($"{i + 1} : ");
+    var stringOutput = new StringBuilder($"{i + 1} : ");
     foreach (var (a, b) in tree.GetNeighbours(i))
     {
-        if (a < i)
+        if (a >= i)
         {
-            continue;
+            stringOutput.Append($"{a + 1}({-b}) ");
         }
-        
-        Console.Write($"{a + 1}({-b}) ");
     }
-    Console.WriteLine();
+
+    if (stringOutput.Length > $"{i + 1} : ".Length)
+    {
+        Console.WriteLine(stringOutput);
+    }
 }

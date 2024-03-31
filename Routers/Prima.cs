@@ -1,51 +1,86 @@
-using System.Dynamic;
-
 namespace Routers;
 
+/// <summary>
+/// Class of making minimal spanning tree from graph.
+/// </summary>
 public static class MinSpanningTreeMaker
 {
-    public static IGraph MakeAlgorithmPrima(IGraph graph)
+    private static IGraph? graph;
+
+    private static bool[]? visited;
+
+    private static int[]? bestNeighbour;
+
+    private static int[]? minEdge;
+
+    private static int visitedCount = 0;
+
+    private static IGraph? minSpanningTree;
+
+    /// <summary>
+    /// Algorithm Prima.
+    /// </summary>
+    /// <param name="initialGraph">IGraph graph.</param>
+    /// <returns>(isSucessedAlgoritm, minSpaninngTee).</returns>
+    public static (bool, IGraph) MakeAlgorithmPrima(IGraph initialGraph)
     {
-        var visited = new bool[graph.Size];
-        var bestEdge= new int[graph.Size];
+        InitializeParameters(initialGraph);
 
-        var minEdge = new int[graph.Size];
-        for (var i = 1; i < graph.Size; ++i)
+        for (var i = 0; i < graph!.Size; ++i)
         {
-            minEdge[i] = (int)1e9;
+            var currentVertex = FindVertexWithMinimalEnteringEdge();
+
+            UpdateMinSpammingTree(currentVertex);
+
+            UpdateNeighbours(currentVertex);
         }
 
-        var minSpanningTree = new MyGraph(graph.Size);
-        
-        for (var i = 0; i < graph.Size; ++i)
+        return (visitedCount == graph.Size, minSpanningTree!);
+    }
+
+    private static void UpdateNeighbours(int currentVertex)
+    {
+        foreach (var (neighbour, length) in graph!.GetNeighbours(currentVertex))
         {
-            var currentVertex = -1;
-            for (var vertex = 0; vertex < graph.Size; ++vertex)
+            if (length < minEdge![neighbour])
             {
-                if (!visited[vertex] && (currentVertex == -1 || minEdge[vertex] < minEdge[currentVertex]))
-                {
-                    currentVertex = vertex;
-                }
+                minEdge[neighbour] = length;
+                bestNeighbour![neighbour] = currentVertex;
             }
+        }
+    }
 
-            visited[currentVertex] = true;
+    private static void UpdateMinSpammingTree(int currentVertex)
+    {
+        if (currentVertex != 0)
+        {
+            minSpanningTree!.AddEdge(bestNeighbour![currentVertex], currentVertex, minEdge![currentVertex]);
+        }
+    }
 
-            if (currentVertex != 0)
+    private static int FindVertexWithMinimalEnteringEdge()
+    {
+        var currentVertex = -1;
+        for (var vertex = 0; vertex < graph!.Size; ++vertex)
+        {
+            if (!visited![vertex] && (currentVertex == -1 || minEdge![vertex] < minEdge![currentVertex]))
             {
-                minSpanningTree.AddEdge(bestEdge[currentVertex], currentVertex, minEdge[currentVertex]);
-            }
-
-
-            foreach (var (neighbour, length) in graph.GetNeighbours(currentVertex))
-            {
-                if (length < minEdge[neighbour])
-                {
-                    minEdge[neighbour] = length;
-                    bestEdge[neighbour] = currentVertex;
-                }
+                currentVertex = vertex;
             }
         }
 
-        return minSpanningTree;
+        visited![currentVertex] = true;
+        ++visitedCount;
+
+        return currentVertex;
+    }
+
+    private static void InitializeParameters(IGraph initialGraph)
+    {
+        visited = new bool[initialGraph.Size];
+        bestNeighbour = new int[initialGraph.Size];
+        minEdge = new int[initialGraph.Size];
+        minSpanningTree = new MyGraph(initialGraph.Size);
+        graph = initialGraph;
     }
 }
