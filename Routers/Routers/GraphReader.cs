@@ -6,7 +6,7 @@ namespace Routers;
 public class GraphReader
 {
     /// <summary>
-    /// Rea graph from file.
+    /// Read graph from file.
     /// </summary>
     /// <param name="filePath">String with relative path to file.</param>
     /// <returns>IGraph graph from file.</returns>

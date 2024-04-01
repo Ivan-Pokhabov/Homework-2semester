@@ -26,23 +26,5 @@ if (!isCorrect)
     return -2;
 }
 
-var output = new StringBuilder();
-for (var i = 0; i < maxSpanningTree.Size; ++i)
-{
-    var stringOutput = new StringBuilder($"{i + 1} : ");
-    foreach (var (neighbour, edgeWeight) in maxSpanningTree.GetNeighbours(i))
-    {
-        if (neighbour >= i)
-        {
-            stringOutput.Append($"{neighbour + 1} ({edgeWeight}) ");
-        }
-    }
-
-    if (stringOutput.Length > $"{i + 1} : ".Length)
-    {
-        output.AppendLine(stringOutput.ToString());
-    }
-}
-
-File.WriteAllText(args[1], output.ToString());
+GraphWriter.WriteGraph(maxSpanningTree, args[1]);
 return 0;
