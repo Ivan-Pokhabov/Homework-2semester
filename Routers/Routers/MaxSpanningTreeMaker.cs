@@ -13,8 +13,6 @@ public static class MaxSpanningTreeMaker
 
     private static int[]? maxEdge;
 
-    private static int visitedCount = 0;
-
     private static IGraph? maxSpanningTree;
 
     /// <summary>
@@ -22,7 +20,7 @@ public static class MaxSpanningTreeMaker
     /// </summary>
     /// <param name="initialGraph">IGraph graph.</param>
     /// <returns>(isSucessedAlgoritm, minSpaninngTee).</returns>
-    public static (bool, IGraph) MakeAlgorithmPrima(IGraph initialGraph)
+    public static IGraph MakeAlgorithmPrima(IGraph initialGraph)
     {
         ArgumentNullException.ThrowIfNull(initialGraph);
 
@@ -37,7 +35,7 @@ public static class MaxSpanningTreeMaker
             UpdateNeighbours(currentVertex);
         }
 
-        return (visitedCount == graph.Size, maxSpanningTree!);
+        return maxSpanningTree!;
     }
 
     private static void UpdateNeighbours(int currentVertex)
@@ -56,6 +54,11 @@ public static class MaxSpanningTreeMaker
     {
         if (currentVertex != 0)
         {
+            if (maxEdge![currentVertex] == -1)
+            {
+                throw new GraphNotConnectedException("Graph is incorrect");
+            }
+
             maxSpanningTree!.AddEdge(bestNeighbour![currentVertex], currentVertex, maxEdge![currentVertex]);
         }
     }
@@ -72,7 +75,6 @@ public static class MaxSpanningTreeMaker
         }
 
         visited![currentVertex] = true;
-        ++visitedCount;
 
         return currentVertex;
     }
@@ -85,7 +87,7 @@ public static class MaxSpanningTreeMaker
         maxSpanningTree = new MyGraph(initialGraph.Size);
         for (var i = 1; i < initialGraph.Size; ++i)
         {
-            maxEdge[i] = (int)-1e9;
+            maxEdge[i] = -1;
         }
 
         graph = initialGraph;

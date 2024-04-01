@@ -1,5 +1,4 @@
-﻿using System.Text;
-using Routers;
+﻿using Routers;
 
 if (args.Length != 2)
 {
@@ -18,11 +17,14 @@ catch (FileNotFoundException e)
     return -1;
 }
 
-var (isCorrect, maxSpanningTree) = MaxSpanningTreeMaker.MakeAlgorithmPrima(graph);
-
-if (!isCorrect)
+IGraph maxSpanningTree;
+try
 {
-    Console.WriteLine("Graph wasn't connected");
+    maxSpanningTree = MaxSpanningTreeMaker.MakeAlgorithmPrima(graph);
+}
+catch (GraphNotConnectedException e)
+{
+    Console.WriteLine(e.Message);
     return -2;
 }
 
