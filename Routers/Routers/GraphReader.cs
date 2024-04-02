@@ -64,7 +64,7 @@ public class GraphReader
             }
         }
 
-        var graph = new MyGraph(vertexes.Count);
+        var graph = new MyGraph(vertexes.Max());
 
         foreach (var edge in parsedTopology)
         {

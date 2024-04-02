@@ -6,27 +6,14 @@ if (args.Length != 2)
     return -1;
 }
 
-IGraph graph;
 try
 {
-    graph = GraphReader.ReadGraph(args[0]);
+    MakeTopology.Build(args[0], args[1]);
 }
-catch (FileNotFoundException e)
+catch (Exception e) when (e is FileNotFoundException || e is ArgumentException || e is GraphNotConnectedException)
 {
     Console.Error.WriteLine(e.Message);
-    return -1;
-}
-
-IGraph maxSpanningTree;
-try
-{
-    maxSpanningTree = MaxSpanningTreeMaker.MakeAlgorithmPrima(graph);
-}
-catch (GraphNotConnectedException e)
-{
-    Console.WriteLine(e.Message);
     return -2;
 }
 
-GraphWriter.WriteGraph(maxSpanningTree, args[1]);
 return 0;
