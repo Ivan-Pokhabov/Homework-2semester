@@ -23,6 +23,19 @@ public class Tests
     }
 
     [Test]
+    public void Map_WithNullLinks_ShouldThrowsException()
+    {
+        List<char> nullList = null!;
+
+        Assert.Throws<ArgumentNullException>(() => Function.Map(nullList, a => a));
+
+        var list = new List<int> { 1, 2, 3 };
+        Func<int, double> nullFunction = null!;
+
+        Assert.Throws<ArgumentNullException>(() => Function.Map(list, nullFunction));
+    }
+
+    [Test]
     public void Filter_WithCorrectInput_ShouldReturnExpectedList()
     {
         var list = new List<string> { "Ovip", "akdov", "matobes", "home" };
@@ -41,11 +54,24 @@ public class Tests
     }
 
     [Test]
+    public void Filter_WithNullLinks_ShouldThrowsException()
+    {
+        List<char> nullList = null!;
+
+        Assert.Throws<ArgumentNullException>(() => Function.Filter(nullList, a => true));
+
+        var list = new List<int> { 1, 2, 3 };
+        Func<int, bool> nullFunction = null!;
+
+        Assert.Throws<ArgumentNullException>(() => Function.Filter(list, nullFunction));
+    }
+
+    [Test]
     public void Fold_WithCorrectInput_ShouldReturnExpectedAccumulatedValue()
     {
         var list = new List<int> { 2, 4, 10 };
 
-        var expectedResult = (double)0.025;
+        var expectedResult = 0.025d;
 
         Assert.That(Function.Fold(list, (double)2, (a, b) => a / b), Is.EqualTo(expectedResult));
     }
@@ -57,5 +83,18 @@ public class Tests
         var startedAccumulator = "test";
 
         Assert.That(Function.Fold(list, startedAccumulator, (x, y) => x + y), Is.EqualTo(startedAccumulator));
+    }
+
+    [Test]
+    public void Fold_WithNullLinks_ShouldThrowsException()
+    {
+        List<char> nullList = null!;
+
+        Assert.Throws<ArgumentNullException>(() => Function.Fold(nullList, "a", (a, b) => a + b));
+
+        var list = new List<int> { 1, 2, 3 };
+        Func<double, int, double> nullFunction = null!;
+
+        Assert.Throws<ArgumentNullException>(() => Function.Fold(list, 0.5d, nullFunction));
     }
 }
