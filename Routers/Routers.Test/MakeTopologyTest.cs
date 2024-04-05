@@ -10,16 +10,16 @@ public class MakeTopologyTests
     {
         MakeTopology.Build(inputFile, "../../../TestFiles/output.txt");
 
-        Assert.That(File.ReadAllText("../../../TestFiles/output.txt") == File.ReadAllText(expectedFile));
+        Assert.That(File.ReadAllText("../../../TestFiles/output.txt"), Is.EqualTo(File.ReadAllText(expectedFile)));
     }
 
     [Test]
     public void Build_WithNullorEmptyStrings_ShouldThrowsException()
     {
         Assert.Throws<ArgumentException>(() => MakeTopology.Build(string.Empty, "lol"));
-        Assert.Throws<ArgumentNullException>(() => MakeTopology.Build(null, "kek"));
+        Assert.Throws<ArgumentNullException>(() => MakeTopology.Build(null!, "kek"));
         Assert.Throws<ArgumentException>(() => MakeTopology.Build("loh", string.Empty));
-        Assert.Throws<ArgumentNullException>(() => MakeTopology.Build("ya", null));
+        Assert.Throws<ArgumentNullException>(() => MakeTopology.Build("ya", null!));
     }
 
     [Test]
