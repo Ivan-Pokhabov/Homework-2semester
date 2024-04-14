@@ -3,83 +3,23 @@ namespace Routers;
 /// <summary>
 /// Class of making minimal spanning tree from graph.
 /// </summary>
-public static class MaxSpanningTreeMaker
+public class MaxSpanningTreeMaker
 {
-    private static IGraph? graph;
+    private IGraph graph;
 
-    private static bool[]? visited;
+    private bool[] visited;
 
-    private static int[]? bestNeighbour;
+    private int[] bestNeighbour;
 
-    private static int[]? maxEdge;
+    private int[] maxEdge;
 
-    private static IGraph? maxSpanningTree;
+    private IGraph maxSpanningTree;
 
     /// <summary>
-    /// Algorithm Prima.
+    /// Initializes a new instance of the <see cref="MaxSpanningTreeMaker"/> class.
     /// </summary>
-    /// <param name="initialGraph">IGraph graph.</param>
-    /// <returns>(isSucessedAlgoritm, minSpaninngTee).</returns>
-    public static IGraph MakeAlgorithmPrima(IGraph initialGraph)
-    {
-        ArgumentNullException.ThrowIfNull(initialGraph);
-
-        InitializeParameters(initialGraph);
-
-        for (var i = 0; i < graph!.Size; ++i)
-        {
-            var currentVertex = FindVertexWithMaxEnteringEdge();
-
-            UpdateMinSpammingTree(currentVertex);
-
-            UpdateNeighbours(currentVertex);
-        }
-
-        return maxSpanningTree!;
-    }
-
-    private static void UpdateNeighbours(int currentVertex)
-    {
-        foreach (var (neighbour, length) in graph!.GetNeighbours(currentVertex))
-        {
-            if (length > maxEdge![neighbour])
-            {
-                maxEdge[neighbour] = length;
-                bestNeighbour![neighbour] = currentVertex;
-            }
-        }
-    }
-
-    private static void UpdateMinSpammingTree(int currentVertex)
-    {
-        if (currentVertex != 0)
-        {
-            if (maxEdge![currentVertex] == -1)
-            {
-                throw new GraphNotConnectedException("Graph is incorrect");
-            }
-
-            maxSpanningTree!.AddEdge(bestNeighbour![currentVertex], currentVertex, maxEdge![currentVertex]);
-        }
-    }
-
-    private static int FindVertexWithMaxEnteringEdge()
-    {
-        var currentVertex = -1;
-        for (var vertex = 0; vertex < graph!.Size; ++vertex)
-        {
-            if (!visited![vertex] && (currentVertex == -1 || maxEdge![vertex] > maxEdge![currentVertex]))
-            {
-                currentVertex = vertex;
-            }
-        }
-
-        visited![currentVertex] = true;
-
-        return currentVertex;
-    }
-
-    private static void InitializeParameters(IGraph initialGraph)
+    /// <param name="initialGraph">Graph that we will transfromed into a tree.</param>
+    public MaxSpanningTreeMaker(IGraph initialGraph)
     {
         visited = new bool[initialGraph.Size];
         bestNeighbour = new int[initialGraph.Size];
@@ -91,5 +31,66 @@ public static class MaxSpanningTreeMaker
         }
 
         graph = initialGraph;
+    }
+
+    /// <summary>
+    /// Algorithm Prima.
+    /// </summary>
+    /// <returns>(isSucessedAlgoritm, minSpaninngTee).</returns>
+    public IGraph MakePrimsAlgorithm()
+    {
+        ArgumentNullException.ThrowIfNull(graph);
+
+        for (var i = 0; i < graph.Size; ++i)
+        {
+            var currentVertex = FindVertexWithMaxEnteringEdge();
+
+            UpdateMinSpammingTree(currentVertex);
+
+            UpdateNeighbours(currentVertex);
+        }
+
+        return maxSpanningTree!;
+    }
+
+    private void UpdateNeighbours(int currentVertex)
+    {
+        foreach (var (neighbour, length) in graph.GetNeighbours(currentVertex))
+        {
+            if (length > maxEdge[neighbour])
+            {
+                maxEdge[neighbour] = length;
+                bestNeighbour[neighbour] = currentVertex;
+            }
+        }
+    }
+
+    private void UpdateMinSpammingTree(int currentVertex)
+    {
+        if (currentVertex != 0)
+        {
+            if (maxEdge[currentVertex] == -1)
+            {
+                throw new GraphNotConnectedException("Graph is incorrect");
+            }
+
+            maxSpanningTree.AddEdge(bestNeighbour![currentVertex], currentVertex, maxEdge![currentVertex]);
+        }
+    }
+
+    private int FindVertexWithMaxEnteringEdge()
+    {
+        var currentVertex = -1;
+        for (var vertex = 0; vertex < graph.Size; ++vertex)
+        {
+            if (!visited[vertex] && (currentVertex == -1 || maxEdge[vertex] > maxEdge[currentVertex]))
+            {
+                currentVertex = vertex;
+            }
+        }
+
+        visited[currentVertex] = true;
+
+        return currentVertex;
     }
 }

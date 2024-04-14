@@ -4,6 +4,6 @@ namespace Routers;
 /// Exception inform that graph is not connected.
 /// </summary>
 /// <param name="message">Message.</param>
-public class GraphNotConnectedException(string message): Exception(message)
+public class GraphNotConnectedException(string message) : Exception(message)
 {
 }

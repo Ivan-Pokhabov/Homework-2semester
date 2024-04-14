@@ -19,8 +19,11 @@ public class GraphWriter
         var output = new StringBuilder();
         for (var i = 0; i < graph.Size; ++i)
         {
-            var stringOutput = new StringBuilder($"{i + 1} : ");
-            foreach (var (neighbour, edgeWeight) in graph.GetNeighbours(i))
+            var currentVertex = i;
+            var neighboursArray = graph.GetNeighbours(currentVertex);
+
+            var stringOutput = new StringBuilder($"{currentVertex + 1} : ");
+            foreach (var (neighbour, edgeWeight) in neighboursArray)
             {
                 if (neighbour >= i)
                 {
@@ -30,7 +33,8 @@ public class GraphWriter
 
             if (stringOutput.Length > $"{i + 1} : ".Length)
             {
-                output.AppendLine(stringOutput.ToString());
+                output.Append(stringOutput);
+                output.Append('\n');
             }
         }
 

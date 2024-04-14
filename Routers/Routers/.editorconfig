@@ -12,8 +12,5 @@ dotnet_diagnostic.SA1010.severity = none
 # SA1101: Prefix local calls with this
 dotnet_diagnostic.SA1101.severity = none
 
-# SA1201: Elements should appear in the correct order
-dotnet_diagnostic.SA1201.severity = none
-
 # SA1200: Using directives should be placed correctly
 dotnet_diagnostic.SA1200.severity = none

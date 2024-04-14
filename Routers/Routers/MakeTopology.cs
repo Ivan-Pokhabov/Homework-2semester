@@ -17,7 +17,7 @@ public static class MakeTopology
 
         IGraph graph = GraphReader.ReadGraph(inputFilePath);
 
-        IGraph maxSpanningTree = MaxSpanningTreeMaker.MakeAlgorithmPrima(graph);
+        IGraph maxSpanningTree = new MaxSpanningTreeMaker(graph).MakePrimsAlgorithm();
 
         GraphWriter.WriteGraph(maxSpanningTree, outputFile);
     }

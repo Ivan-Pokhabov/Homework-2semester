@@ -5,6 +5,8 @@ namespace Routers;
 /// </summary>
 public class MyGraph : IGraph
 {
+    private readonly List<List<(int, int)>> graph;
+
     /// <summary>
     /// Initializes a new instance of the <see cref="MyGraph"/> class.
     /// </summary>
@@ -20,8 +22,6 @@ public class MyGraph : IGraph
 
         Size = size;
     }
-
-    private readonly List<List<(int, int)>> graph;
 
     /// <inheritdoc/>
     public int Size { get; }

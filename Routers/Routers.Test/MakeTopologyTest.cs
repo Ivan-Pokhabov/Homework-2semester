@@ -24,7 +24,9 @@ public class MakeTopologyTests
 
     [Test]
     public void Build_WithUnexistedFile_ShouldThrowsExceptions()
-        => Assert.Throws<FileNotFoundException>(() => MakeTopology.Build("MatematikaUbivaet.pomogite", "hochuPiva.txt"));
+    {
+        Assert.Throws<FileNotFoundException>(() => MakeTopology.Build("MatematikaUbivaet.pomogite", "hochuPiva.txt"));
+    }
 
     [TestCase("../../../TestFiles/disconnectedGraph1.txt")]
     [TestCase("../../../TestFiles/disconnectedGraph2.txt")]

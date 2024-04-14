@@ -3,7 +3,7 @@ namespace Routers;
 /// <summary>
 /// Class of file graph reader.
 /// </summary>
-public class GraphReader
+public static class GraphReader
 {
     /// <summary>
     /// Read graph from file.
@@ -13,20 +13,20 @@ public class GraphReader
     /// <exception cref="FileNotFoundException">File should exist.</exception>
     public static IGraph ReadGraph(string filePath)
     {
-        ArgumentException.ThrowIfNullOrEmpty(nameof(filePath));
+        ArgumentException.ThrowIfNullOrEmpty(filePath);
 
         return (!File.Exists(filePath)) ? throw new FileNotFoundException($"File not found: {filePath}") : ParseTopology(filePath);
     }
 
     private static IGraph ParseTopology(string filePath)
     {
-        var topology = File.ReadAllText(filePath);
+        var topology = File.ReadAllLines(filePath);
 
         var parsedTopology = new List<(int, int, int)>();
 
         var vertexes = new HashSet<int>();
 
-        foreach (var line in topology.Split("\n"))
+        foreach (var line in topology)
         {
             var splittedLine = line.Split(":");
             if (splittedLine.Length != 2)
