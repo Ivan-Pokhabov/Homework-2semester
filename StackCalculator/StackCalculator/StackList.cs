@@ -1,20 +1,20 @@
 namespace StackCalculator;
 
 /// <summary>
-/// Class that implement stack contains doubles on List and interface IStack.
+/// Class that implement stack contains Ts on List and interface IStack.
 /// </summary>
-public class StackList : IStack
+public class StackList<T> : IStack<T>
 {
-    private List<double> stack = new List<double>();
+    private List<T> stack = new();
 
     /// <inheritdoc />
-    public void Push(double element)
+    public void Push(T element)
     {
         this.stack.Add(element);
     }
 
     /// <inheritdoc />
-    public double Pop()
+    public T Pop()
     {
         if (this.IsEmpty())
         {

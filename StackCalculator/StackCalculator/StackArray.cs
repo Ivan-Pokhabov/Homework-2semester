@@ -3,16 +3,16 @@ namespace StackCalculator;
 /// <summary>
 /// Class that implement stack contains doubles on array and interface IStack.
 /// </summary>
-public class StackArray : IStack
+public class StackArray<T> : IStack<T>
 {
     private int topIndex = -1;
 
     private int arraySize = 1;
 
-    private double[] stack = new double[1];
+    private T?[] stack = new T?[1];
 
     /// <inheritdoc />
-    public void Push(double element)
+    public void Push(T element)
     {
         this.ResizeArray();
 
@@ -22,7 +22,7 @@ public class StackArray : IStack
     }
 
     /// <inheritdoc />
-    public double Pop()
+    public T Pop()
     {
         if (this.IsEmpty())
         {
@@ -31,7 +31,11 @@ public class StackArray : IStack
 
         --this.topIndex;
 
-        return this.stack[this.topIndex + 1];
+        var result = stack[topIndex + 1] ?? throw new ArgumentException("Can't pop from empty stack.");
+
+        stack[topIndex + 1] = default;
+
+        return result;
     }
 
     /// <inheritdoc />

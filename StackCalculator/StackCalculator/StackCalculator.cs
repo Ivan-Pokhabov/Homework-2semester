@@ -5,14 +5,14 @@ namespace StackCalculator;
 /// </summary>
 public class Calculator
 {
-    private readonly IStack stack;
+    private readonly IStack<double> stack;
 
     /// <summary>
     /// Initializes a new instance of the <see cref="Calculator"/> class.
     /// </summary>
     /// <param name="stack">Stack for counting.</param>
     /// <exception cref="ArgumentNullException">Stack can't be null.</exception>
-    public Calculator(IStack stack)
+    public Calculator(IStack<double> stack)
     {
         this.stack = stack ?? throw new ArgumentNullException(nameof(stack));
     }

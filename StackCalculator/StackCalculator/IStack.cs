@@ -3,20 +3,20 @@ namespace StackCalculator;
 /// <summary>
 /// Stack, a last-in-first-out container for double values.
 /// </summary>
-public interface IStack
+public interface IStack<T>
 {
     /// <summary>
     /// Add new object to the top of Stack.
     /// </summary>
     /// <param name="element">New element that will be added to stack.</param>
-    void Push(double element);
+    void Push(T element);
 
     /// <summary>
     /// Get element from the top of stack and removes it.
     /// </summary>
     /// <returns>Element from the top of stack.</returns>
     /// <exception cref="InvalidOperationException">Pop from empty Stack.</exception>
-    double Pop();
+    T Pop();
 
     /// <summary>
     /// Check is empty stack or not.

@@ -4,8 +4,8 @@ Console.WriteLine("Enter your postfix expression(it should include only real num
 
 var expression = Console.ReadLine();
 
-var stackArrayCalculator = new Calculator(new StackArray());
-var stackListCalculator = new Calculator(new StackList());
+var stackArrayCalculator = new Calculator(new StackArray<double>());
+var stackListCalculator = new Calculator(new StackList<double>());
 
 var (result1, isCorrect1) = stackArrayCalculator.CalculatePostfixExpression(expression);
 var (result2, isCorrect2) = stackListCalculator.CalculatePostfixExpression(expression);
