@@ -6,18 +6,18 @@ public class StackTests
 {
     private static IEnumerable<TestCaseData> Stack()
     {
-        yield return new TestCaseData(new StackArray());
-        yield return new TestCaseData(new StackList());
+        yield return new TestCaseData(new StackArray<double>());
+        yield return new TestCaseData(new StackList<double>());
     }
 
     [TestCaseSource(nameof(Stack))]
-    public void Pop_FromEmptyStack_ShouldThrowException(IStack stack)
+    public void Pop_FromEmptyStack_ShouldThrowException(IStack<double> stack)
     {
         Assert.Throws(typeof(InvalidOperationException), () => stack.Pop());
     }
 
     [TestCaseSource(nameof(Stack))]
-    public void Empty_AfterPop_ShouldReturnTrue(IStack stack)
+    public void Empty_AfterPop_ShouldReturnTrue(IStack<double> stack)
     {
         var emptyStackResult = stack.IsEmpty();
 
@@ -31,7 +31,7 @@ public class StackTests
     }
 
     [TestCaseSource(nameof(Stack))]
-    public void PopAndPush_WorksCorrectly(IStack stack)
+    public void PopAndPush_WorksCorrectly(IStack<double> stack)
     {
         stack.Push(2);
         stack.Push(3);
