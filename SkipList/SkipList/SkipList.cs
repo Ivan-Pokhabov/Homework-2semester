@@ -15,7 +15,7 @@ public class SkipList<T> : IList<T>
 
     private readonly Random random = new ();
 
-    private readonly SkipListElement downHead;
+    private SkipListElement downHead;
 
     private int state = 0;
 
@@ -98,6 +98,7 @@ public class SkipList<T> : IList<T>
             current.Down = new SkipListElement(default, nil, default);
         }
 
+        downHead = current;
         ++state;
         Count = 0;
     }
