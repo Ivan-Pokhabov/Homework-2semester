@@ -189,7 +189,11 @@ public class SkipList<T> : IList<T>
         RemoveValue(head, item, ref wasDelete);
 
         ++state;
-        --Count;
+        if (wasDelete)
+        {
+            --Count;
+        }
+
         return wasDelete;
     }
 
