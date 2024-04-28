@@ -130,7 +130,7 @@ public class SkipList<T> : IList<T>
 
         if (array.Length - arrayIndex < Count)
         {
-            throw new ArgumentException("Skip List larger than gap to copy in.", nameof(arrayIndex));
+            throw new ArgumentException("Skip List larger than gap to copy in");
         }
 
         var current = downHead.Next;
