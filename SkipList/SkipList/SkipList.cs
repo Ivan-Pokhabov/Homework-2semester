@@ -9,7 +9,7 @@ using System.Collections;
 public class SkipList<T> : IList<T>
     where T : IComparable<T>
 {
-    private const int MaxLevel = 4;
+    private const int MaxLevel = 32;
 
     private readonly SkipListElement nil = new (default, default, default);
 
@@ -17,7 +17,7 @@ public class SkipList<T> : IList<T>
 
     private SkipListElement downHead;
 
-    private int state = 0;
+    private int version;
 
     private SkipListElement head;
 
@@ -28,7 +28,7 @@ public class SkipList<T> : IList<T>
     {
         head = new (default, nil, default);
         var current = head;
-        for (int i = 0; i < MaxLevel - 1; ++i)
+        for (var i = 0; i < MaxLevel - 1; ++i)
         {
             current.Down = new SkipListElement(default, nil, default);
             current = current.Down;
@@ -55,14 +55,9 @@ public class SkipList<T> : IList<T>
 
             var current = downHead;
 
-            for (int i = 0; i < index + 1; ++i)
+            for (var i = 0; i < index + 1; ++i)
             {
-                current = current.Next;
-
-                if (current is null)
-                {
-                    throw new InvalidOperationException("Class is broken");
-                }
+                current = current.Next ?? throw new InvalidOperationException("Class is broken");
             }
 
             if (current.Item is null)
@@ -78,13 +73,13 @@ public class SkipList<T> : IList<T>
     /// <inheritdoc/>
     public void Add(T item)
     {
-        SkipListElement? newSkipListElement = InsertValue(head, item);
+        var newSkipListElement = InsertValue(head, item);
         if (newSkipListElement is not null)
         {
             head.Next = new SkipListElement(item, nil, newSkipListElement);
         }
 
-        ++state;
+        ++version;
         ++Count;
     }
 
@@ -93,13 +88,13 @@ public class SkipList<T> : IList<T>
     {
         head = new (default, nil, default);
         var current = head;
-        for (int i = 0; i < MaxLevel - 1; ++i)
+        for (var i = 0; i < MaxLevel - 1; ++i)
         {
             current.Down = new SkipListElement(default, nil, default);
         }
 
         downHead = current;
-        ++state;
+        ++version;
         Count = 0;
     }
 
@@ -186,16 +181,16 @@ public class SkipList<T> : IList<T>
     /// <inheritdoc/>
     public bool Remove(T item)
     {
-        var wasDelete = false;
-        RemoveValue(head, item, ref wasDelete);
+        var success = false;
+        RemoveValue(head, item, ref success);
 
-        ++state;
-        if (wasDelete)
+        ++version;
+        if (success)
         {
             --Count;
         }
 
-        return wasDelete;
+        return success;
     }
 
     /// <inheritdoc/>
@@ -266,7 +261,7 @@ public class SkipList<T> : IList<T>
         {
             result.Next = new SkipListElement(item, result.Next, downElement);
 
-            if (CoinFlip())
+            if (FlipCoin())
             {
                 return result.Next;
             }
@@ -300,21 +295,21 @@ public class SkipList<T> : IList<T>
         return FindValue(result.Down, item);
     }
 
-    private bool CoinFlip() => random.Next() % 2 == 0;
+    private bool FlipCoin() => random.Next() % 2 == 0;
 
     private class Enumerator : IEnumerator<T>
     {
-        private readonly SkipList<T>? skiplist;
+        private readonly SkipList<T>? skipList;
+
+        private readonly int version;
 
         private SkipListElement? current;
-
-        private int state;
 
         public Enumerator(SkipList<T> skiplist)
         {
             current = skiplist.downHead;
-            this.skiplist = skiplist;
-            state = this.skiplist.state;
+            this.skipList = skiplist;
+            version = this.skipList.version;
         }
 
         /// <inheritdoc/>
@@ -352,19 +347,19 @@ public class SkipList<T> : IList<T>
         /// <inheritdoc/>
         public bool MoveNext()
         {
-            if (current is null || skiplist is null)
+            if (current is null || skipList is null)
             {
                 throw new InvalidOperationException("Class is broken");
             }
 
-            if (state != skiplist.state)
+            if (version != skipList.version)
             {
                 throw new InvalidOperationException("Can't modify skiplist during iteration");
             }
 
-            if (current.Next == skiplist.nil)
+            if (current.Next == skipList.nil)
             {
-                current = skiplist.downHead;
+                current = skipList.downHead;
                 return false;
             }
 
@@ -376,17 +371,17 @@ public class SkipList<T> : IList<T>
         /// <inheritdoc/>
         public void Reset()
         {
-            if (skiplist is null)
+            if (skipList is null)
             {
                 throw new InvalidOperationException("Class is broken");
             }
 
-            if (state != skiplist.state)
+            if (version != skipList.version)
             {
                 throw new InvalidOperationException("Can't modify skiplist during iteration");
             }
 
-            current = skiplist.downHead;
+            current = skipList.downHead;
         }
     }
 
