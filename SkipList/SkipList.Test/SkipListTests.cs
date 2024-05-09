@@ -136,12 +136,16 @@ public class SkipListTests
 
 
         Assert.Throws<ArgumentException>(() => skiplist.CopyTo(array, 6));
+    }
+
+    [Test]
+    public void CopyTo_WithOutOfRangeIndex_ShouldThrowException()
+    {
+        Array.ForEach(new int[] { 1, 7, 4, 5, 12 }, skiplist.Add);
+        var array = new int[7];
 
 
-        Array.ForEach(new int[] {1, 2, 3}, skiplist.Add);
-
-
-        Assert.Throws<ArgumentException>(() => skiplist.CopyTo(array, 0));
+        Assert.Throws<ArgumentOutOfRangeException>(() => skiplist.CopyTo(array, -1));
     }
 
     [Test]
