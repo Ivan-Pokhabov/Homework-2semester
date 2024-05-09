@@ -75,13 +75,14 @@ public class SkipListTests
     }
 
     [Test]
+    public void Contains_WithEmptySkipList_ShouldReturnFalse()
+        => Assert.That(skiplist, Does.Not.Contain(10));
+
+    [Test]
     public void ContainsWithAddAndRemove_WithCorrectInput_ShouldReturnExpectedResult()
     {
-        Assert.That(skiplist, Does.Not.Contain(10));
-
-
         Array.ForEach(new int[] { 9, 7, 5, 12 }, skiplist.Add);
-        
+
 
         skiplist.Remove(9);
         skiplist.Remove(7);
