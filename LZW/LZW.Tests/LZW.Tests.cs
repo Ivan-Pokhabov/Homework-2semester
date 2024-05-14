@@ -1,12 +1,13 @@
 using LZW;
 namespace LZW.Tests;
 
-public class Tests
+public class LZWTests
 {
 
     [TestCase("../../../TestFiles/M.-R.-Carey-The-Girl-With-All-the-Gifts.pdf")]
     [TestCase("../../../TestFiles/Толстой Лев. Война и мир. Книга 1 - royallib.ru.txt")]
     [TestCase("../../../TestFiles/blablabla.png")]
+    [TestCase("../../../TestFiles/lolExeOnLinux.exe")]
     public void EncodeAndDecodeWithBWT_ShouldNotChangeTheFile(string path)
     {
         var expected = File.ReadAllBytes(path);
@@ -15,12 +16,13 @@ public class Tests
 
         var actual = File.ReadAllBytes(path);
 
-        Assert.IsTrue(Enumerable.SequenceEqual(actual, expected));
+        Assert.That(Enumerable.SequenceEqual(actual, expected), Is.True);
     }
 
     [TestCase("../../../TestFiles/M.-R.-Carey-The-Girl-With-All-the-Gifts.pdf")]
     [TestCase("../../../TestFiles/Толстой Лев. Война и мир. Книга 1 - royallib.ru.txt")]
     [TestCase("../../../TestFiles/blablabla.png")]
+    [TestCase("../../../TestFiles/lolExeOnLinux.exe")]
     public void EncodeAndDecodeWithoutBWT_ShouldNotChangeTheFile(string path)
     {
         var expected = File.ReadAllBytes(path);
@@ -29,7 +31,7 @@ public class Tests
 
         var actual = File.ReadAllBytes(path);
 
-        Assert.IsTrue(Enumerable.SequenceEqual(actual, expected));
+        Assert.That(Enumerable.SequenceEqual(actual, expected), Is.True);
     }
 
     [TestCase("../../../LZW/TestFiles/empty.txt")]
