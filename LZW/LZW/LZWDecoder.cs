@@ -18,15 +18,17 @@ public static class LZWDecoder
 
         var dictionary = new Dictionary<int, List<byte>>();
 
-        for (var i = 0; i < 256; ++i)
+        const int ByteSize = 256;
+
+        for (var i = 0; i < ByteSize; ++i)
         {
-            dictionary.Add(i, new List<byte> { (byte)i });
+            dictionary.Add(i, [(byte)i]);
         }
 
         var currentEncodeNumber = 256;
         var encode = new DecodeIntContainer();
 
-        for (var i = 0; i < code.Length; ++i)
+        foreach (var newByte in code)
         {
             if (currentEncodeNumber == encode.MaxInt)
             {
@@ -34,7 +36,7 @@ public static class LZWDecoder
                 encode.MaxInt <<= 1;
             }
 
-            if (encode.Add(code[i]))
+            if (encode.Add(newByte))
             {
                 ++currentEncodeNumber;
             }
@@ -52,22 +54,15 @@ public static class LZWDecoder
             var newCodeSequence = new List<byte>();
             newCodeSequence.AddRange(dictionary[encodeInts[i]]);
 
-            if (!dictionary.ContainsKey(encodeInts[i + 1]))
-            {
-                newCodeSequence.Add(newCodeSequence[0]);
-
-                dictionary.Add(currentEncodeNumber, newCodeSequence);
-            }
-            else
-            {
-                newCodeSequence.Add(dictionary[encodeInts[i + 1]][0]);
-
-                dictionary.Add(currentEncodeNumber, newCodeSequence);
-            }
+            newCodeSequence.Add(
+                !dictionary.ContainsKey(encodeInts[i + 1])
+                ? newCodeSequence[0]
+                : dictionary[encodeInts[i + 1]][0]);
+            dictionary.Add(currentEncodeNumber, newCodeSequence);
 
             ++currentEncodeNumber;
         }
 
-        return decodeBytes.ToArray();
+        return [.. decodeBytes];
     }
 }

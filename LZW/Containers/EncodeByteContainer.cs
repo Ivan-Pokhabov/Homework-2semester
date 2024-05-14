@@ -7,7 +7,7 @@ public class EncodeByteContainer
 {
     private const int BitsInByte = 8;
 
-    private readonly List<byte> container = new ();
+    private readonly List<byte> container = [];
 
     private byte currentByte = 0;
 
@@ -51,7 +51,7 @@ public class EncodeByteContainer
     public byte[] GetByteArray()
     {
         PrepareContainerToTransformToArray();
-        return container.ToArray();
+        return [.. container];
     }
 
     private void PrepareContainerToTransformToArray()

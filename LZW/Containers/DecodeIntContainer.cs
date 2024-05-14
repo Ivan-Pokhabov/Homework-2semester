@@ -7,7 +7,7 @@ public class DecodeIntContainer
 {
     private const int BitsInByte = 8;
 
-    private readonly List<int> container = new ();
+    private readonly List<int> container = [];
 
     private int currentInt = 0;
 
@@ -57,7 +57,7 @@ public class DecodeIntContainer
     public int[] GetIntArray()
     {
         PrepareContainerToTransformIntoArray();
-        return container.ToArray();
+        return [.. container];
     }
 
     private void PrepareContainerToTransformIntoArray()

@@ -19,20 +19,22 @@ public static class LZWEncoder
 
         var dictionary = new Trie.Trie();
 
-        for (var i = 0; i < 256; ++i)
+        const int ByteSize = 256;
+
+        for (var i = 0; i < ByteSize; ++i)
         {
-            dictionary.Add(new List<byte> { (byte)i }, i);
+            dictionary.Add([(byte)i], i);
         }
 
-        var currentNumber = 256;
+        var currentCodeSequenceNumber = ByteSize;
         var code = new EncodeByteContainer();
-        var currentEncodeSequense = new List<byte>();
+        var currentEncodeSequence = new List<byte>();
 
         foreach (var bytes in file)
         {
-            currentEncodeSequense.Add(bytes);
+            currentEncodeSequence.Add(bytes);
 
-            if (dictionary.GetValue(currentEncodeSequense) == -1)
+            if (dictionary.GetValue(currentEncodeSequence) == -1)
             {
                 if (code.MaxSymbols == dictionary.Size)
                 {
@@ -40,19 +42,19 @@ public static class LZWEncoder
                     code.MaxSymbols <<= 1;
                 }
 
-                dictionary.Add(currentEncodeSequense, currentNumber);
-                ++currentNumber;
+                dictionary.Add(currentEncodeSequence, currentCodeSequenceNumber);
+                ++currentCodeSequenceNumber;
 
-                currentEncodeSequense.RemoveAt(currentEncodeSequense.Count - 1);
+                currentEncodeSequence.RemoveAt(currentEncodeSequence.Count - 1);
 
-                code.Add(dictionary.GetValue(currentEncodeSequense));
+                code.Add(dictionary.GetValue(currentEncodeSequence));
 
-                currentEncodeSequense.Clear();
-                currentEncodeSequense.Add(bytes);
+                currentEncodeSequence.Clear();
+                currentEncodeSequence.Add(bytes);
             }
         }
 
-        code.Add(dictionary.GetValue(currentEncodeSequense));
+        code.Add(dictionary.GetValue(currentEncodeSequence));
 
         return code.GetByteArray();
     }

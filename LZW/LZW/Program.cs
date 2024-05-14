@@ -12,7 +12,7 @@ if (!File.Exists(args[0]))
     return;
 }
 
-bool withBWT = args.Length == 3 && args[2] == "--bwt";
+var withBWT = args is [_, _, "--bwt"];
 
 if (args[1] == "--c")
 {
@@ -22,9 +22,9 @@ if (args[1] == "--c")
     {
         result = LZWTransformer.Encode(args[0], withBWT);
     }
-    catch (ArgumentException)
+    catch (ArgumentException e)
     {
-        Console.WriteLine("Encoding failed");
+        Console.WriteLine($"Encoding failed because of {e.Message}");
         return;
     }
 
@@ -36,9 +36,9 @@ else if (args[1] == "--u")
     {
         LZWTransformer.Decode(args[0], withBWT);
     }
-    catch (ArgumentException)
+    catch (ArgumentException e)
     {
-        Console.WriteLine("Decoding failed");
+        Console.WriteLine($"Decoding failed because of {e.Message}");
         return;
     }
 

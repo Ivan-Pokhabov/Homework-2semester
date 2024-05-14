@@ -16,6 +16,8 @@ public static class LZWTransformer
     /// <exception cref="ArgumentException">File should exists and can't be null or empty.</exception>
     public static double Encode(string filePath, bool withBWT = false)
     {
+        ArgumentException.ThrowIfNullOrEmpty(nameof(filePath));
+
         if (!File.Exists(filePath))
         {
             throw new ArgumentException("File with this path doesn't exist", nameof(filePath));
@@ -43,7 +45,7 @@ public static class LZWTransformer
         var firstFileByteSize = new FileInfo(filePath).Length;
         var secondFileByteSize = new FileInfo(newFilePath).Length;
 
-        return (double)firstFileByteSize / (double)secondFileByteSize;
+        return (double)firstFileByteSize / secondFileByteSize;
     }
 
     /// <summary>
@@ -54,36 +56,32 @@ public static class LZWTransformer
     /// <exception cref="ArgumentException">Decoding file should be correct.</exception>
     public static void Decode(string filePath, bool wasBWT = false)
     {
-        if (!File.Exists(filePath))
-        {
-            throw new ArgumentException("No file with this path exists", nameof(filePath));
-        }
-
         ArgumentException.ThrowIfNullOrEmpty(nameof(filePath));
 
-        var newFilePath = filePath.Substring(0, filePath.LastIndexOf('.'));
-
-        if (newFilePath == string.Empty)
+        if (!File.Exists(filePath))
         {
-            throw new ArgumentException("File name comprises only of extension", nameof(filePath));
+            throw new ArgumentException("File with this path doesn't exist", nameof(filePath));
         }
+
+        var newFilePath = filePath[..filePath.LastIndexOf('.')];
 
         var code = File.ReadAllBytes(filePath);
 
         code = LZWDecoder.Decode(code);
 
-        byte[] decodeBWTBytes = code;
+        var decodeBWTBytes = code;
 
         if (wasBWT)
         {
-            var indexInBytes = new byte[4];
+            var bwtCodeLength = 4;
+            var indexInBytes = new byte[bwtCodeLength];
 
-            for (var i = 0; i < 4; ++i)
+            for (var i = 0; i < bwtCodeLength; ++i)
             {
-                indexInBytes[i] = code[i + code.Length - 4];
+                indexInBytes[i] = code[i + code.Length - bwtCodeLength];
             }
 
-            Array.Resize(ref code, code.Length - 4);
+            Array.Resize(ref code, code.Length - bwtCodeLength);
             var index = BitConverter.ToInt32(indexInBytes);
 
             decodeBWTBytes = BWTTransformer.ReverseTransform(code, index);
