@@ -19,14 +19,14 @@ public class BubbleSortTests
     [Test]
     public void BubbleSort_WithReverseSotedArray_ShouldWorksCorrectly()
     {
-        var list = new List<int>() { 1, 4, 8, 10, 12 };
+        var list = new int[] { 1, 4, 8, 10, 12 };
         list.Reverse();
 
 
         GenericBubbleSort<int>.BubbleSort(list, Comparer<int>.Default);
 
 
-        var expectedResult = new List<int>() { 1, 4, 8, 10, 12 };
+        var expectedResult = new int[] { 1, 4, 8, 10, 12 };
         Assert.That(list, Is.EqualTo(expectedResult));
     }
 
