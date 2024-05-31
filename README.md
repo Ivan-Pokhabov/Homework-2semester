@@ -47,12 +47,6 @@ Distributed under the MIT License. See `LICENSE.txt` for more information.
 
 Install [.NET 8.0 (or higher)](https://dotnet.microsoft.com/en-us/download)
 
-Download dotnet SDK on MacOS:
-
-```bash
-brew install dotnet-sdk
-```
-
 Clone git repository:
 
 ```bash
